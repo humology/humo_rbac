@@ -1,0 +1,5 @@
+<h3>Edit User roles</h3>
+
+<%= render "form.html", Map.put(assigns, :action, routes().cms_user_role_path(@conn, :update, @user)) %>
+
+<%= rlink @conn, "Back", to: routes().cms_user_role_path(@conn, :index) %>

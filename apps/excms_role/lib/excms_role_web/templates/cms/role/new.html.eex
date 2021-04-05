@@ -1,0 +1,5 @@
+<h3>New Role</h3>
+
+<%= render "form.html", Map.put(assigns, :action, routes().cms_role_path(@conn, :create)) %>
+
+<%= rlink @conn, "Back", to: routes().cms_role_path(@conn, :index) %>
