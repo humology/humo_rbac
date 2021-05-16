@@ -18,5 +18,9 @@ config :excms_core, ExcmsCoreWeb.PluginsRouter,
     cms_routers: [ExcmsRoleWeb.Routers.Cms]
   }
 
+config :excms_core, ExcmsCoreWeb.BrowserPlugs,
+  excms_core: [ExcmsCoreWeb.LocalePlug],
+  excms_role: [ExcmsRoleWeb.AuthorizePlug]
+
 config :excms_core, ExcmsCore.Warehouse,
   excms_role: [ExcmsRole.RolesService.Role, ExcmsRole.UsersRolesService.UserRole]
