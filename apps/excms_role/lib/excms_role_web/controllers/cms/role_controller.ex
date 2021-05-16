@@ -3,12 +3,13 @@ defmodule ExcmsRoleWeb.Cms.RoleController do
 
   alias ExcmsRole.RolesService
   alias ExcmsRole.RolesService.Role
-  alias ExcmsCore.CmsAccess
-  alias ExcmsCoreWeb.Authorizer
+  alias ExcmsCore.GlobalAccess
+  alias ExcmsCore.Warehouse
 
   plug :load_resources
 
-  def permissions(type), do: [{type, Role}, {type, CmsAccess}]
+  def rest_permissions(rest_action),
+    do: [Permission.new(Role, rest_action), Permission.new(GlobalAccess, "cms")]
 
   def index(conn, _params) do
     roles = RolesService.list_roles()
@@ -67,6 +68,10 @@ defmodule ExcmsRoleWeb.Cms.RoleController do
   end
 
   defp load_resources(conn, _params) do
-    assign(conn, :resources, Authorizer.list_resources())
+    resources_helpers =
+      Warehouse.resources()
+      |> Enum.map(&Warehouse.resource_to_helpers/1)
+
+    assign(conn, :resources_helpers, resources_helpers)
   end
 end

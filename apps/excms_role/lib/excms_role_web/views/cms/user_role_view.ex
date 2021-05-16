@@ -8,11 +8,11 @@ defmodule ExcmsRoleWeb.Cms.UserRoleView do
   end
 
   def roles_ids(items) do
-    Enum.map(items, &(&1.id))
+    Enum.map(items, & &1.id)
   end
 
   def roles_names(items) do
-    Enum.map(items, &(&1.name))
+    Enum.map(items, & &1.name)
     |> Enum.join(", ")
   end
 end

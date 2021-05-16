@@ -11,28 +11,30 @@
     <%= error_tag f, :name %>
   </div>
 
-  <div class="form-group col-md-4">
-    <%= label f, :create %>
-    <%= multiple_select f, :create, @resources, class: "form-control" %>
-    <%= error_tag f, :create %>
-  </div>
+  <br/>
+  <br/>
 
-  <div class="form-group col-md-4">
-    <%= label f, :read %>
-    <%= multiple_select f, :read, @resources, class: "form-control" %>
-    <%= error_tag f, :read %>
-  </div>
-
-  <div class="form-group col-md-4">
-    <%= label f, :update %>
-    <%= multiple_select f, :update, @resources, class: "form-control" %>
-    <%= error_tag f, :update %>
-  </div>
-
-  <div class="form-group col-md-4">
-    <%= label f, :delete %>
-    <%= multiple_select f, :delete, @resources, class: "form-control" %>
-    <%= error_tag f, :delete %>
+  <div>
+    <%= inputs_for f, :permission_resources, fn f_resource -> %>
+      <div class="row">
+        <div class="form-group col-md-2">
+          <%= hidden_input f_resource, :name %>
+          <strong><%= input_value f_resource, :name %></strong>
+          <%= error_tag f_resource, :name %>
+        </div>
+        <%= inputs_for f_resource, :permission_actions, fn f_action -> %>
+          <div class="form-group col-md-1">
+            <%= hidden_input f_action, :name %>
+            <%= input_value f_action, :name %>
+            <%= error_tag f_action, :name %>
+          </div>
+          <div class="form-group col-md-1">
+            <%= select f_action, :access_level, input_value(f_action, :access_level_options), class: "form-control" %>
+            <%= error_tag f_action, :access_level %>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
   </div>
 
   <div class="form-group col-md-4">

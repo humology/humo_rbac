@@ -4,7 +4,6 @@ defmodule ExcmsServer.Factory do
   alias ExcmsRole.UsersRolesService.User
   alias ExcmsRole.RolesService.Role
   alias ExcmsRole.RolesService
-  alias ExcmsCoreWeb.Authorizer
 
   def user_factory do
     %User{
@@ -12,7 +11,7 @@ defmodule ExcmsServer.Factory do
       last_name: "Smith",
       email: sequence(:email, &"email-#{&1}@example.invalid"),
       email_verified_at: DateTime.utc_now(),
-      inserted_at: DateTime.utc_now() |> DateTime.add(sequence(:user_inserted_at, &(&1)), :second),
+      inserted_at: DateTime.utc_now() |> DateTime.add(sequence(:user_inserted_at, & &1), :second),
       roles: []
     }
   end
@@ -20,10 +19,7 @@ defmodule ExcmsServer.Factory do
   def role_factory do
     %Role{
       name: sequence(:role, &"role-#{&1}"),
-      create: [],
-      read: [],
-      update: [],
-      delete: []
+      permission_resources: []
     }
   end
 
@@ -33,10 +29,12 @@ defmodule ExcmsServer.Factory do
       last_name: "Smith",
       email: sequence(:email, &"email-#{&1}@example.invalid"),
       email_verified_at: DateTime.utc_now(),
-      roles: RolesService.list_roles()
-             |> Enum.filter(&(&1.name == "administrator")),
-      inserted_at: DateTime.utc_now()
-                   |> DateTime.add(sequence(:user_inserted_at, &(&1)), :second)
+      roles:
+        RolesService.list_roles()
+        |> Enum.filter(&(&1.name == "administrator")),
+      inserted_at:
+        DateTime.utc_now()
+        |> DateTime.add(sequence(:user_inserted_at, & &1), :second)
     }
   end
 
@@ -47,15 +45,29 @@ defmodule ExcmsServer.Factory do
       email: sequence(:email, &"email-#{&1}@example.invalid"),
       email_verified_at: DateTime.utc_now(),
       roles: [build(:readonly_role)],
-      inserted_at: DateTime.utc_now()
-                   |> DateTime.add(sequence(:user_inserted_at, &(&1)), :second)
+      inserted_at:
+        DateTime.utc_now()
+        |> DateTime.add(sequence(:user_inserted_at, & &1), :second)
     }
   end
 
-  def readonly_role_factory do
+  def restricted_role_factory do
     %Role{
-      name: "readonly",
-      read: Authorizer.list_resources()
+      name: "restricted",
+      permission_resources: []
+    }
+  end
+
+  def restricted_user_factory do
+    %User{
+      first_name: "Jane",
+      last_name: "Smith",
+      email: sequence(:email, &"email-#{&1}@example.invalid"),
+      email_verified_at: DateTime.utc_now(),
+      roles: [build(:restricted_role)],
+      inserted_at:
+        DateTime.utc_now()
+        |> DateTime.add(sequence(:user_inserted_at, & &1), :second)
     }
   end
 end

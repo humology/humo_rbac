@@ -1,6 +1,5 @@
 defmodule ExcmsRole.UsersRolesService.User do
   use Ecto.Schema
-  use ExcmsCore.Resource
   import Ecto.Changeset
   alias ExcmsRole.UsersRolesService.UserRole
   alias ExcmsRole.RolesService.Role
@@ -16,8 +15,9 @@ defmodule ExcmsRole.UsersRolesService.User do
     field :email_verified_at, :utc_datetime_usec, default: nil
 
     many_to_many :roles, Role,
-                 join_keys: [user_id: :id, role_id: :id],
-                 join_through: UserRole, on_replace: :delete
+      join_keys: [user_id: :id, role_id: :id],
+      join_through: UserRole,
+      on_replace: :delete
 
     timestamps()
   end
@@ -30,4 +30,8 @@ defmodule ExcmsRole.UsersRolesService.User do
 
   defp get_roles(%{"roles" => ids}), do: RolesService.get_roles(ids)
   defp get_roles(_), do: []
+
+  defmodule Helpers do
+    use ExcmsCore.EctoResourceHelpers
+  end
 end

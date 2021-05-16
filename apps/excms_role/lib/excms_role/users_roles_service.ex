@@ -9,6 +9,8 @@ defmodule ExcmsRole.UsersRolesService do
   alias ExcmsRole.UsersRolesService.User
   alias ExcmsRole.UsersRolesService.UserRole
   alias ExcmsRole.RolesService.Role
+  alias ExcmsCore.Warehouse
+  alias ExcmsCore.Permission
 
   @doc """
   Returns list of users by page, size and optional search query.
@@ -81,6 +83,34 @@ defmodule ExcmsRole.UsersRolesService do
     |> Repo.preload(:roles)
   end
 
+  def get_permissions(id) do
+    get_user(id)
+    |> Map.fetch!(:roles)
+    |> roles_to_permissions()
+  end
+
+  defp roles_to_permissions(roles) do
+    names_resources = Warehouse.names_resources()
+
+    roles
+    |> Enum.map(fn role ->
+      role.permission_resources
+      |> Enum.filter(fn x -> Map.has_key?(names_resources, x.name) end)
+      |> Enum.flat_map(fn x ->
+        x.permission_actions
+        |> Enum.map(fn y ->
+          %{resource_name: x.name, action: y.name, access_level: y.access_level}
+        end)
+      end)
+      |> Enum.map(fn x ->
+        resource = Map.fetch!(names_resources, x.resource_name)
+        Permission.unsafe_new(resource, x.action, x.access_level)
+      end)
+      |> Enum.filter(fn x -> Permission.validate(x) == :ok end)
+    end)
+    |> Permission.union()
+  end
+
   @doc """
   Updates a user_role.
 
@@ -125,15 +155,20 @@ defmodule ExcmsRole.UsersRolesService do
       {:ok, _} ->
         from u in query,
           where: u.id == ^search
+
       :error ->
         search = "%#{search}%"
+
         from u in query,
-          join: ur in UserRole, on: ur.user_id == u.id,
-          join: r in Role, on: r.id == ur.role_id,
-          where: ilike(u.first_name, ^search) or
-                 ilike(u.last_name, ^search) or
-                 ilike(u.email, ^search) or
-                 ilike(r.name, ^search)
+          join: ur in UserRole,
+          on: ur.user_id == u.id,
+          join: r in Role,
+          on: r.id == ur.role_id,
+          where:
+            ilike(u.first_name, ^search) or
+              ilike(u.last_name, ^search) or
+              ilike(u.email, ^search) or
+              ilike(r.name, ^search)
     end
   end
 
@@ -145,6 +180,6 @@ defmodule ExcmsRole.UsersRolesService do
   defp paginate(query, page, size) when page > 0 and size > 0 do
     from query,
       limit: ^size,
-      offset: ^((page-1) * size)
+      offset: ^((page - 1) * size)
   end
 end

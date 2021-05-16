@@ -9,8 +9,7 @@ config :excms_core, :plugins,
     title: "Roles",
     cms_links: [
       %{title: "Roles", route: :cms_role_path, action: :index},
-      %{title: "Users Roles", route: :cms_user_role_path, action: :index},
-      #TODO Administrators
+      %{title: "Users Roles", route: :cms_user_role_path, action: :index}
     ]
   }
 
@@ -18,3 +17,6 @@ config :excms_core, ExcmsCoreWeb.PluginsRouter,
   excms_role: %{
     cms_routers: [ExcmsRoleWeb.Routers.Cms]
   }
+
+config :excms_core, ExcmsCore.Warehouse,
+  excms_role: [ExcmsRole.RolesService.Role, ExcmsRole.UsersRolesService.UserRole]

@@ -5,25 +5,21 @@
   <%= @role.name %>
 </div>
 
-<div class="form-group col-md-4">
-  <strong>Create</strong><br/>
-  <%= resources_with_commas(@role.create) %>
-</div>
+<% permission_map = get_permission_map(@role) %>
+<%= for helpers <- @resources_helpers do %>
+  <div class="row">
+    <div class="form-group col-md-2">
+      <strong><%= helpers.name() %></strong>
+    </div>
 
-<div class="form-group col-md-4">
-  <strong>Read</strong><br/>
-  <%= resources_with_commas(@role.read) %>
-</div>
+    <%= for action <- helpers.actions() do %>
+      <div class="form-group col-md-2">
+        <strong><%= action %> :</strong>
+        <strong><%= get_access_level(permission_map, helpers, action) %></strong>
+      </div>
+    <% end %>
+  </div>
+<% end %>
 
-<div class="form-group col-md-4">
-  <strong>Update</strong><br/>
-  <%= resources_with_commas(@role.update) %>
-</div>
-
-<div class="form-group col-md-4">
-  <strong>Delete</strong><br/>
-  <%= resources_with_commas(@role.delete) %>
-</div>
-
-<%= ulink @conn, "Edit", to: routes().cms_role_path(@conn, :edit, @role), class: "mr-1" %>
-<%= rlink @conn, "Back", to: routes().cms_role_path(@conn, :index) %>
+<%= permitted_link @conn, "Edit", to: routes().cms_role_path(@conn, :edit, @role), class: "mr-1" %>
+<%= permitted_link @conn, "Back", to: routes().cms_role_path(@conn, :index) %>

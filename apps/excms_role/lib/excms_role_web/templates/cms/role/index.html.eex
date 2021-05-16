@@ -4,10 +4,6 @@
   <thead>
     <tr>
       <th>Name</th>
-      <th>Create</th>
-      <th>Read</th>
-      <th>Update</th>
-      <th>Delete</th>
       <th>Actions</th>
     </tr>
   </thead>
@@ -15,19 +11,15 @@
     <%= for role <- @roles do %>
       <tr>
         <td><%= role.name %></td>
-        <td><%= resources_with_commas(role.create) %></td>
-        <td><%= resources_with_commas(role.read) %></td>
-        <td><%= resources_with_commas(role.update) %></td>
-        <td><%= resources_with_commas(role.delete) %></td>
 
         <td>
-          <%= rlink @conn, "Show", to: routes().cms_role_path(@conn, :show, role), class: "mr-1" %>
-          <%= ulink @conn, "Edit", to: routes().cms_role_path(@conn, :edit, role), class: "mr-1" %>
-          <%= dlink @conn, "Delete", to: routes().cms_role_path(@conn, :delete, role), method: :delete, data: [confirm: "Are you sure?"] %>
+          <%= permitted_link @conn, "Show", to: routes().cms_role_path(@conn, :show, role), class: "mr-1" %>
+          <%= permitted_link @conn, "Edit", to: routes().cms_role_path(@conn, :edit, role), class: "mr-1" %>
+          <%= permitted_link @conn, "Delete", to: routes().cms_role_path(@conn, :delete, role), method: :delete, data: [confirm: "Are you sure?"] %>
         </td>
       </tr>
     <% end %>
   </tbody>
 </table>
 
-<%= clink @conn, "New Role", to: routes().cms_role_path(@conn, :new) %>
+<%= permitted_link @conn, "New Role", to: routes().cms_role_path(@conn, :new) %>

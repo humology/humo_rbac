@@ -6,27 +6,33 @@ defmodule ExcmsRoleWeb.Cms.UserRoleController do
   alias ExcmsRole.UsersRolesService.UserRole
   alias ExcmsRole.RolesService
   alias ExcmsRole.RolesService.Role
-  alias ExcmsCore.CmsAccess
+  alias ExcmsCore.GlobalAccess
 
   plug :load_roles
 
   @page_size 50
 
-  def permissions(type), do: [{type, UserRole}, {type, CmsAccess}, {:read, User}, {:read, Role}]
+  def rest_permissions(rest_action),
+    do: [
+      Permission.new(UserRole, rest_action),
+      Permission.new(User, "read"),
+      Permission.new(Role, "read"),
+      Permission.new(GlobalAccess, "cms")
+    ]
 
   def index(conn, params) do
-    page = Map.get(params, "page", "1")
-    |> String.to_integer()
+    page =
+      Map.get(params, "page", "1")
+      |> String.to_integer()
 
     search = Map.get(params, "search")
 
     users = UsersRolesService.page_users(page, @page_size, search)
 
     users_count = UsersRolesService.count_users(search)
-    page_max = div(users_count-1, @page_size) + 1
+    page_max = div(users_count - 1, @page_size) + 1
 
-    render(conn, "index.html",
-      users: users, search: search, page: page, page_max: page_max)
+    render(conn, "index.html", users: users, search: search, page: page, page_max: page_max)
   end
 
   def show(conn, %{"id" => id}) do

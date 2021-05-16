@@ -1,6 +1,5 @@
 defmodule ExcmsRole.UsersRolesService.UserRole do
   use Ecto.Schema
-  use ExcmsCore.Resource
   alias ExcmsAccount.UsersService.User
   alias ExcmsRole.RolesService.Role
 
@@ -9,5 +8,9 @@ defmodule ExcmsRole.UsersRolesService.UserRole do
     belongs_to :role, Role
 
     timestamps(updated_at: false)
+  end
+
+  defmodule Helpers do
+    use ExcmsCore.EctoResourceHelpers
   end
 end

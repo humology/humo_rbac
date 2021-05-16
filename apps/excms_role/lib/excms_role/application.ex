@@ -8,7 +8,7 @@ defmodule ExcmsRole.Application do
   def start(_type, _args) do
     children = [
       # Start the PubSub system
-      {Phoenix.PubSub, name: ExcmsRole.PubSub},
+      {Phoenix.PubSub, name: ExcmsRole.PubSub}
       # Start a worker by calling: ExcmsRole.Worker.start_link(arg)
       # {ExcmsRole.Worker, arg}
     ]

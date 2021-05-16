@@ -3,9 +3,9 @@ defmodule ExcmsRoleWeb.Cms.RoleControllerTest do
 
   alias ExcmsRole.RolesService
 
-  @create_attrs %{create: [], delete: [], name: "some name", read: [], update: []}
-  @update_attrs %{create: [], delete: [], name: "some updated name", read: [], update: []}
-  @invalid_attrs %{create: nil, delete: nil, name: nil, read: nil, update: nil}
+  @create_attrs %{name: "some name", permissions: []}
+  @update_attrs %{name: "some updated name", permissions: []}
+  @invalid_attrs %{name: nil, permissions: nil}
 
   def fixture(:role) do
     {:ok, role} = RolesService.create_role(@create_attrs)
@@ -15,8 +15,7 @@ defmodule ExcmsRoleWeb.Cms.RoleControllerTest do
   setup %{conn: conn} do
     user = insert(:admin_user)
 
-    conn = conn
-    |> Plug.Test.init_test_session(user_id: user.id)
+    conn = Plug.Test.init_test_session(conn, user_id: user.id)
 
     %{conn: conn}
   end
@@ -84,6 +83,7 @@ defmodule ExcmsRoleWeb.Cms.RoleControllerTest do
     test "deletes chosen role", %{conn: conn, role: role} do
       conn = delete(conn, routes().cms_role_path(conn, :delete, role))
       assert redirected_to(conn) == routes().cms_role_path(conn, :index)
+
       assert_error_sent 404, fn ->
         get(conn, routes().cms_role_path(conn, :show, role))
       end

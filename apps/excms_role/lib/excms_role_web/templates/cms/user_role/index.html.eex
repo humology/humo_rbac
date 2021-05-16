@@ -34,8 +34,8 @@
         <td><%= user.email_verified_at %></td>
         <td><%= user.inserted_at %></td>
         <td>
-          <%= rlink @conn, "Show", to: routes().cms_user_role_path(@conn, :show, user), class: "mr-1" %>
-          <%= ulink @conn, "Edit", to: routes().cms_user_role_path(@conn, :edit, user) %>
+          <%= permitted_link @conn, "Show", to: routes().cms_user_role_path(@conn, :show, user), class: "mr-1" %>
+          <%= permitted_link @conn, "Edit", to: routes().cms_user_role_path(@conn, :edit, user) %>
         </td>
       </tr>
     <% end %>
