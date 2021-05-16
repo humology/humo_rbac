@@ -48,7 +48,8 @@ defmodule ExcmsRole.MixProject do
       {:plug_cowboy, "~> 2.0"},
       {:ex_machina, "~> 2.4", only: :test},
       {:excms_core, git: "git@github.com:excms/excms_core.git", sparse: "apps/excms_core"},
-      {:excms_account, git: "git@github.com:excms/excms_account.git", sparse: "apps/excms_account"}
+      {:excms_account,
+       git: "git@github.com:excms/excms_account.git", sparse: "apps/excms_account"}
     ]
   end
 
