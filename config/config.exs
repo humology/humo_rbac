@@ -29,7 +29,7 @@ config :logger, :console,
   format: "$time $metadata[$level] $message\n",
   metadata: [:request_id]
 
-config :excms_mail, ExcmsMailWeb.Mailer,
+config :excms_account, ExcmsAccountWeb.Mailer,
   adapter: Bamboo.SMTPAdapter,
   tls: :if_available,
   allowed_tls_versions: [:tlsv1, :"tlsv1.1", :"tlsv1.2"],
@@ -42,10 +42,6 @@ config :excms_account, ExcmsAccountWeb.AuthService,
   timeout_seconds: 3600 * 24,
   secret: "sKKlOpvwOwHg+cTLFO4byayYBUWEBGCJGjgGTjdRWYkTVPNGi9gnlYAmVCWo9mVnDhgT",
   salt: "JghkDhKAHTBDTVtbtdsOTtdsgtOPGqKSHvBtGHTDgh"
-
-config :excms_account, :email,
-  service: ExcmsMailWeb.MailerDummy,
-  async_send: false
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
