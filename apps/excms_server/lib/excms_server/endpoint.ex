@@ -14,6 +14,7 @@ defmodule ExcmsServer.Endpoint do
     websocket: true,
     longpoll: false
 
+
   socket "/live", Phoenix.LiveView.Socket, websocket: [connect_info: [session: @session_options]]
 
   # Serve at "/" the static files from "priv/static" directory.
@@ -22,7 +23,7 @@ defmodule ExcmsServer.Endpoint do
   # when deploying your static files in production.
   plug Plug.Static,
     at: "/",
-    from: :excms_role,
+    from: :excms_server,
     gzip: false,
     only: ~w(css fonts images js favicon.ico robots.txt)
 
