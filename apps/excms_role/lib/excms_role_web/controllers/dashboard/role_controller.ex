@@ -1,4 +1,4 @@
-defmodule ExcmsRoleWeb.Cms.RoleController do
+defmodule ExcmsRoleWeb.Dashboard.RoleController do
   use ExcmsRoleWeb, :controller
 
   alias ExcmsRole.RolesService
@@ -9,7 +9,7 @@ defmodule ExcmsRoleWeb.Cms.RoleController do
   plug :load_resources
 
   def rest_permissions(rest_action),
-    do: [Permission.new(Role, rest_action), Permission.new(GlobalAccess, "cms")]
+    do: [Permission.new(Role, rest_action), Permission.new(GlobalAccess, "dashboard")]
 
   def index(conn, _params) do
     roles = RolesService.list_roles()
@@ -26,7 +26,7 @@ defmodule ExcmsRoleWeb.Cms.RoleController do
       {:ok, role} ->
         conn
         |> put_flash(:info, "Role created successfully.")
-        |> redirect(to: routes().cms_role_path(conn, :show, role))
+        |> redirect(to: routes().dashboard_role_path(conn, :show, role))
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "new.html", changeset: changeset)
@@ -51,7 +51,7 @@ defmodule ExcmsRoleWeb.Cms.RoleController do
       {:ok, role} ->
         conn
         |> put_flash(:info, "Role updated successfully.")
-        |> redirect(to: routes().cms_role_path(conn, :show, role))
+        |> redirect(to: routes().dashboard_role_path(conn, :show, role))
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "edit.html", role: role, changeset: changeset)
@@ -64,7 +64,7 @@ defmodule ExcmsRoleWeb.Cms.RoleController do
 
     conn
     |> put_flash(:info, "Role deleted successfully.")
-    |> redirect(to: routes().cms_role_path(conn, :index))
+    |> redirect(to: routes().dashboard_role_path(conn, :index))
   end
 
   defp load_resources(conn, _params) do

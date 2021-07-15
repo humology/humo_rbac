@@ -7,15 +7,15 @@ config :excms_role,
 config :excms_core, :plugins,
   excms_role: %{
     title: "Roles",
-    cms_links: [
-      %{title: "Roles", route: :cms_role_path, action: :index},
-      %{title: "Users Roles", route: :cms_user_role_path, action: :index}
+    dashboard_links: [
+      %{title: "Roles", route: :dashboard_role_path, action: :index},
+      %{title: "Users Roles", route: :dashboard_user_role_path, action: :index}
     ]
   }
 
 config :excms_core, ExcmsCoreWeb.PluginsRouter,
   excms_role: %{
-    cms_routers: [ExcmsRoleWeb.Routers.Cms]
+    dashboard_routers: [ExcmsRoleWeb.Routers.Dashboard]
   }
 
 config :excms_core, ExcmsCoreWeb.BrowserPlugs,

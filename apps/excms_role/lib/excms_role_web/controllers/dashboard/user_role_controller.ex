@@ -1,4 +1,4 @@
-defmodule ExcmsRoleWeb.Cms.UserRoleController do
+defmodule ExcmsRoleWeb.Dashboard.UserRoleController do
   use ExcmsRoleWeb, :controller
 
   alias ExcmsAccount.UsersService.User
@@ -17,7 +17,7 @@ defmodule ExcmsRoleWeb.Cms.UserRoleController do
       Permission.new(UserRole, rest_action),
       Permission.new(User, "read"),
       Permission.new(Role, "read"),
-      Permission.new(GlobalAccess, "cms")
+      Permission.new(GlobalAccess, "dashboard")
     ]
 
   def index(conn, params) do
@@ -54,7 +54,7 @@ defmodule ExcmsRoleWeb.Cms.UserRoleController do
       {:ok, user} ->
         conn
         |> put_flash(:info, "User role updated successfully.")
-        |> redirect(to: routes().cms_user_role_path(conn, :show, user))
+        |> redirect(to: routes().dashboard_user_role_path(conn, :show, user))
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "edit.html", user: user, changeset: changeset)

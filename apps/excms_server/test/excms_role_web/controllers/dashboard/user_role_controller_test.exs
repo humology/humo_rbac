@@ -1,4 +1,4 @@
-defmodule ExcmsRoleWeb.Cms.UserRoleControllerTest do
+defmodule ExcmsRoleWeb.Dashboard.UserRoleControllerTest do
   use ExcmsServer.ConnCase
 
   alias ExcmsRole.UsersRolesService
@@ -14,7 +14,7 @@ defmodule ExcmsRoleWeb.Cms.UserRoleControllerTest do
 
   describe "index" do
     test "lists all users_roles", %{conn: conn} do
-      conn = get(conn, routes().cms_user_role_path(conn, :index))
+      conn = get(conn, routes().dashboard_user_role_path(conn, :index))
       assert html_response(conn, 200) =~ "<h3>Users roles</h3>"
     end
   end
@@ -25,7 +25,7 @@ defmodule ExcmsRoleWeb.Cms.UserRoleControllerTest do
     end
 
     test "renders form for editing user roles", %{conn: conn, user: user} do
-      conn = get(conn, routes().cms_user_role_path(conn, :edit, user))
+      conn = get(conn, routes().dashboard_user_role_path(conn, :edit, user))
       assert html_response(conn, 200) =~ "Edit User role"
 
       assert [%{name: "restricted"}] = UsersRolesService.get_user!(user.id).roles
@@ -43,11 +43,11 @@ defmodule ExcmsRoleWeb.Cms.UserRoleControllerTest do
         |> Enum.filter(&(&1.name == "administrator"))
 
       conn =
-        put(conn, routes().cms_user_role_path(conn, :update, user.id),
+        put(conn, routes().dashboard_user_role_path(conn, :update, user.id),
           user: %{roles: [admin_role.id]}
         )
 
-      assert redirected_to(conn) == routes().cms_user_role_path(conn, :show, user)
+      assert redirected_to(conn) == routes().dashboard_user_role_path(conn, :show, user)
 
       assert [%{name: "administrator"}] = UsersRolesService.get_user!(user.id).roles
     end

@@ -1,4 +1,4 @@
-defmodule ExcmsRoleWeb.Cms.RoleView do
+defmodule ExcmsRoleWeb.Dashboard.RoleView do
   use ExcmsRoleWeb, :view
   alias ExcmsRole.RolesService.Role
 

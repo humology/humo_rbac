@@ -1,4 +1,4 @@
-defmodule ExcmsRoleWeb.Cms.UserRoleView do
+defmodule ExcmsRoleWeb.Dashboard.UserRoleView do
   use ExcmsRoleWeb, :view
 
   def roles_options(items) do
