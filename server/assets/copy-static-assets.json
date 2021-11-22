@@ -1,0 +1,20 @@
+[
+  {
+    "force": false,
+    "from": "../deps/excms_core/assets/static",
+    "priority": 0,
+    "to": "../"
+  },
+  {
+    "force": true,
+    "from": "../deps/excms_account/assets/static",
+    "priority": 1,
+    "to": "../"
+  },
+  {
+    "force": true,
+    "from": "../assets/static",
+    "priority": 2,
+    "to": "../"
+  }
+]

@@ -1,17 +1,17 @@
-defmodule ExcmsRole.MixProject do
+defmodule ExcmsServer.MixProject do
   use Mix.Project
 
   def project do
     [
-      app: :excms_role,
+      app: :excms_server,
       version: "0.1.0",
+      deps_path: "../deps",
       elixir: "~> 1.7",
       elixirc_paths: elixirc_paths(Mix.env()),
       compilers: [:phoenix, :gettext] ++ Mix.compilers(),
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
-      deps: deps(),
-      humo_plugin: true
+      deps: deps()
     ]
   end
 
@@ -20,7 +20,7 @@ defmodule ExcmsRole.MixProject do
   # Type `mix help compile.app` for more information.
   def application do
     [
-      mod: {ExcmsRole.Application, []},
+      mod: {ExcmsServer.Application, []},
       extra_applications: [:logger, :runtime_tools]
     ]
   end
@@ -34,20 +34,12 @@ defmodule ExcmsRole.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
-      {:phoenix, "~> 1.6.2"},
-      {:phoenix_ecto, "~> 4.4"},
-      {:ecto_sql, "~> 3.6"},
-      {:postgrex, ">= 0.0.0"},
-      {:phoenix_html, "~> 3.0"},
-      {:gettext, "~> 0.18"},
-      {:jason, "~> 1.2"},
-      {:plug_cowboy, "~> 2.5"},
-      {:ex_machina, "~> 2.4", only: :test},
-      {:bcrypt_elixir, "~> 2.0"},
-      {:bamboo, "~> 1.5"},
-      {:bamboo_smtp, "~> 2.1.0"},
-      {:excms_core, git: "git@github.com:excms/excms_core.git", branch: "experiment-no-umbrella"},
-      {:excms_account, git: "git@github.com:excms/excms_account.git", branch: "experiment-no-umbrella"}
+      {:phoenix_live_reload, "~> 1.2", only: :dev},
+      {:phoenix_live_dashboard, "~> 0.5"},
+      {:telemetry_metrics, "~> 0.6"},
+      {:telemetry_poller, "~> 1.0"},
+      {:esbuild, "~> 0.3", runtime: Mix.env() == :dev},
+      {:excms_role, path: "../"}
     ]
   end
 
@@ -59,11 +51,14 @@ defmodule ExcmsRole.MixProject do
   # See the documentation for `Mix` for more info on aliases.
   defp aliases do
     [
-      "setup.deps": ["deps.get"],
-      setup: ["ecto.setup"],
+      setup: ["cmd mix deps.setup", "cmd mix rest.setup"],
+      "deps.setup": ["deps.get", "cmd elixir ../deps/excms_core/lib/deps.config.gen.exs"],
+      "rest.setup": ["ecto.setup", "assets.setup"],
+      "assets.setup": ["excms.assets.gen", "excms.npm.install"],
       "ecto.setup": ["ecto.create", "excms.ecto.migrate", "run priv/repo/seeds.exs"],
       "ecto.reset": ["ecto.drop", "ecto.setup"],
-      test: ["ecto.create --quiet", "excms.ecto.migrate", "test"]
+      test: ["ecto.create --quiet", "excms.ecto.migrate", "test"],
+      "assets.deploy": ["esbuild default --minify", "phx.digest"]
     ]
   end
 end
