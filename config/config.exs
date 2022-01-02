@@ -7,12 +7,45 @@
 # General application configuration
 import Config
 
-import_config "plugin.exs"
+if Path.expand("#{Mix.env()}_deps.exs", __DIR__) |> File.exists?(), do:
+  import_config "#{Mix.env()}_deps.exs"
+
+# Configures the endpoint
+config :excms_role, ExcmsRoleWeb.Endpoint,
+  url: [host: "localhost"],
+  secret_key_base: "jgcynEhO5benFFnqSS5I/tDf+62XJF3/h15CfA+N1Olg2h9n9TFZ1yiwLlWcsOwR",
+  render_errors: [view: ExcmsRoleWeb.ErrorView, accepts: ~w(html json), layout: false],
+  pubsub_server: ExcmsRole.PubSub,
+  live_view: [signing_salt: "dEhMVmz4"]
+
+# Configure esbuild (the version is required)
+config :esbuild,
+  version: "0.14.0",
+  default: [
+    args:
+      ~w(js/app.js --bundle --target=es2017 --outdir=../priv/static/assets --external:/fonts/* --external:/images/*),
+    cd: Path.expand("../assets", __DIR__),
+    env: %{"NODE_PATH" => Path.expand("../deps", __DIR__)}
+  ]
 
 # Configures Elixir's Logger
 config :logger, :console,
   format: "$time $metadata[$level] $message\n",
   metadata: [:request_id]
+
+config :excms_account, ExcmsAccountWeb.AuthService,
+  timeout_seconds: 3600 * 24,
+  secret: "sKKlOpvwOwHg+cTLFO4byayYBUWEBGCJGjgGTjdRWYkTVPNGi9gnlYAmVCWo9mVnDhgT",
+  salt: "JghkDhKAHTBDTVtbtdsOTtdsgtOPGqKSHvBtGHTDgh"
+
+config :excms_account, ExcmsAccountWeb.Mailer,
+  adapter: Bamboo.SMTPAdapter,
+  tls: :if_available,
+  allowed_tls_versions: [:tlsv1, :"tlsv1.1", :"tlsv1.2"],
+  ssl: true,
+  retries: 3,
+  no_mx_lookups: false,
+  auth: :always
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.

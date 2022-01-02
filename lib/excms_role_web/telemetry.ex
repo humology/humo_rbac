@@ -1,4 +1,4 @@
-defmodule ExcmsServer.Telemetry do
+defmodule ExcmsRoleWeb.Telemetry do
   use Supervisor
   import Telemetry.Metrics
 
@@ -49,7 +49,7 @@ defmodule ExcmsServer.Telemetry do
     [
       # A module, function and arguments to be invoked periodically.
       # This function must call :telemetry.execute/3 and a metric must be added above.
-      # {ExcmsCoreWeb, :count_users, []}
+      # {ExcmsRoleWeb, :count_users, []}
     ]
   end
 end

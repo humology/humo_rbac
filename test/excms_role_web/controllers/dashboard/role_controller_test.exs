@@ -1,5 +1,5 @@
 defmodule ExcmsRoleWeb.Dashboard.RoleControllerTest do
-  use ExcmsServer.ConnCase
+  use ExcmsRole.ConnCase
 
   alias ExcmsRole.RolesService
 
