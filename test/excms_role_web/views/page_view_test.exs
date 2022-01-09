@@ -1,3 +1,3 @@
 defmodule ExcmsRoleWeb.PageViewTest do
-  use ExcmsRole.ConnCase, async: true
+  use ExcmsRoleWeb.ConnCase, async: true
 end

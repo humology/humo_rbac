@@ -1,4 +1,4 @@
-defmodule ExcmsRole.ConnCase do
+defmodule ExcmsRoleWeb.ConnCase do
   @moduledoc """
   This module defines the test case to be used by
   tests that require setting up a connection.
@@ -11,7 +11,7 @@ defmodule ExcmsRole.ConnCase do
   we enable the SQL sandbox, so changes done to the database
   are reverted at the end of every test. If you are using
   PostgreSQL, you can even run database tests asynchronously
-  by setting `use ExcmsRole.ConnCase, async: true`, although
+  by setting `use ExcmsRoleWeb.ConnCase, async: true`, although
   this option is not recommended for other databases.
   """
 
@@ -22,9 +22,9 @@ defmodule ExcmsRole.ConnCase do
       # Import conveniences for testing with connections
       import Plug.Conn
       import Phoenix.ConnTest
-      import ExcmsRole.ConnCase
+      import ExcmsRoleWeb.ConnCase
 
-      import ExcmsCore, only: [routes: 0]
+      import ExcmsCoreWeb, only: [routes: 0]
       import ExcmsRole.Factory
 
       # The default endpoint for testing

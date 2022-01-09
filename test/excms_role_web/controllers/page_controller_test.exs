@@ -1,5 +1,5 @@
 defmodule ExcmsRoleWeb.PageControllerTest do
-  use ExcmsRole.ConnCase
+  use ExcmsRoleWeb.ConnCase
 
   test "GET /", %{conn: conn} do
     conn = get(conn, "/")

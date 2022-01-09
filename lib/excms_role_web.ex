@@ -69,7 +69,7 @@ defmodule ExcmsRoleWeb do
 
       import ExcmsRoleWeb.ErrorHelpers
       import ExcmsRoleWeb.Gettext
-      import ExcmsCore, only: [routes: 0]
+      import ExcmsCoreWeb, only: [routes: 0]
       import ExcmsCoreWeb.AccessViewHelpers
     end
   end
