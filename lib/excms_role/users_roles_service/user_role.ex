@@ -3,7 +3,7 @@ defmodule ExcmsRole.UsersRolesService.UserRole do
   alias ExcmsAccount.UsersService.User
   alias ExcmsRole.RolesService.Role
 
-  schema "users_roles" do
+  schema "excms_role_users_roles" do
     belongs_to :user, User, type: :binary_id
     belongs_to :role, Role
 

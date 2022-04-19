@@ -23,4 +23,7 @@ config :excms_core, ExcmsCoreWeb.BrowserPlugs,
   excms_role: [{ExcmsRoleWeb.AuthorizePlug, true}]
 
 config :excms_core, ExcmsCore.Warehouse,
-  excms_role: [ExcmsRole.RolesService.Role, ExcmsRole.UsersRolesService.UserRole]
+  excms_role: [
+    ExcmsRole.RolesService.Role,
+    ExcmsRole.UsersRolesService.User
+  ]

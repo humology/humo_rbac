@@ -1,92 +1,108 @@
 defmodule ExcmsRole.RolesServiceTest do
-  use ExcmsRole.DataCase
+  use ExcmsRole.DataCase, async: true
 
   alias ExcmsRole.RolesService
+  alias ExcmsRole.RolesService.Role
+  alias ExcmsRole.RolesService.Resource
+  alias ExcmsCore.Authorizer.Mock
+  alias ExcmsCore.Authorizer.AllAccess
+  alias ExcmsCore.Authorizer.NoAccess
 
-  describe "roles" do
-    alias ExcmsRole.RolesService.Role
+  @valid_attrs %{name: "some name", resources: []}
+  @update_attrs %{
+    name: "some updated name",
+    resources: [
+      %{name: "excms_role_roles", actions: ["read", "delete"]}
+    ]
+  }
+  @invalid_attrs %{name: nil, resources: nil}
 
-    @valid_attrs %{name: "some name", permission_resources: []}
-    @update_attrs %{name: "some updated name", permission_resources: []}
-    @invalid_attrs %{name: nil, permission_resources: nil}
+  def role_fixture(attrs \\ %{}) do
+    {:ok, role} =
+      attrs
+      |> Enum.into(@valid_attrs)
+      |> RolesService.create_role()
 
-    def role_fixture(attrs \\ %{}) do
-      {:ok, role} =
-        attrs
-        |> Enum.into(@valid_attrs)
-        |> RolesService.create_role()
+    role
+  end
 
-      role
+  describe "list_roles/1" do
+    test "without access returns no roles" do
+      fn ->
+        assert [] = RolesService.list_roles(nil)
+      end
+      |> Mock.with_mock(can_all: &NoAccess.can_all/3)
     end
 
-    test "list_roles/0 returns all roles" do
+    test "with all access returns all roles" do
       role = role_fixture()
-
-      roles_except_admin =
-        RolesService.list_roles()
-        |> Enum.reject(&(&1.name == "administrator"))
-
-      assert Enum.map(roles_except_admin, &cleanup/1) == Enum.map([role], &cleanup/1)
+      fn ->
+        assert role in RolesService.list_roles(nil)
+      end
+      |> Mock.with_mock(can_all: &AllAccess.can_all/3)
     end
+  end
 
-    test "get_role!/1 returns the role with given id" do
+  describe "get_role!/1" do
+    test "returns the role with given id" do
       role = role_fixture()
-      assert cleanup(RolesService.get_role!(role.id)) == cleanup(role)
+      assert role == RolesService.get_role!(role.id)
     end
+  end
 
-    test "create_role/1 with valid data creates a role" do
+  describe "get_roles/1" do
+    test "returns the role with given id" do
+      role = role_fixture()
+      role_fixture(name: "another role")
+
+      assert [role] == RolesService.get_roles([role.id])
+    end
+  end
+
+  describe "create_role/1" do
+    test "with valid data creates a role" do
       assert {:ok, %Role{} = role} = RolesService.create_role(@valid_attrs)
-      assert role.name == "some name"
-      assert cleanup(role) == []
+      assert "some name" == role.name
     end
 
-    test "create_role/1 with invalid data returns error changeset" do
+    test "with invalid data returns error changeset" do
       assert {:error, %Ecto.Changeset{}} = RolesService.create_role(@invalid_attrs)
     end
 
-    test "create_role/1 with duplicate rolename" do
-      assert {:ok, %Role{} = role} = RolesService.create_role(@valid_attrs)
-      assert role.name == "some name"
-      assert cleanup(role) == []
+    test "with duplicate role name returns error changeset" do
+      assert {:ok, %Role{}} = RolesService.create_role(@valid_attrs)
 
       assert {:error, %Ecto.Changeset{}} = RolesService.create_role(@valid_attrs)
     end
+  end
 
-    test "update_role/2 with valid data updates the role" do
+  describe "update_role/2" do
+    test "with valid data updates the role" do
       role = role_fixture()
       assert {:ok, %Role{} = role} = RolesService.update_role(role, @update_attrs)
-      assert role.name == "some updated name"
-      assert cleanup(role) == []
+      assert "some updated name" == role.name
+      assert %Resource{name: "excms_role_roles", actions: ["read", "delete"]} in role.resources
     end
 
-    test "update_role/2 with invalid data returns error changeset" do
+    test "with invalid data returns error changeset" do
       role = role_fixture()
       assert {:error, %Ecto.Changeset{}} = RolesService.update_role(role, @invalid_attrs)
-      assert cleanup(RolesService.get_role!(role.id)) == cleanup(role)
+      assert RolesService.get_role!(role.id) == role
     end
+  end
 
-    test "delete_role/1 deletes the role" do
+  describe "delete_role/1" do
+    test "deletes the role" do
       role = role_fixture()
       assert {:ok, %Role{}} = RolesService.delete_role(role)
       assert_raise Ecto.NoResultsError, fn -> RolesService.get_role!(role.id) end
     end
+  end
 
-    test "change_role/1 returns a role changeset" do
+  describe "change_role/1" do
+    test "returns a role changeset" do
       role = role_fixture()
       assert %Ecto.Changeset{} = RolesService.change_role(role)
     end
-  end
-
-  defp cleanup(role) do
-    role.permission_resources
-    |> Enum.map(fn resource ->
-      actions =
-        resource.permission_actions
-        |> Enum.reject(fn x -> x.access_level == "no" end)
-        |> Enum.map(&%{&1 | access_level_options: nil})
-
-      %{resource | permission_actions: actions}
-    end)
-    |> Enum.reject(fn x -> x.permission_actions == [] end)
   end
 end

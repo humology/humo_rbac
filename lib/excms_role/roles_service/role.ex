@@ -2,12 +2,11 @@ defmodule ExcmsRole.RolesService.Role do
   use Ecto.Schema
   import Ecto.Changeset
   alias ExcmsCore.Warehouse
-  alias ExcmsRole.RolesService.PermissionAction
-  alias ExcmsRole.RolesService.PermissionResource
+  alias ExcmsRole.RolesService.Resource
 
-  schema "roles" do
+  schema "excms_role_roles" do
     field :name, :string
-    embeds_many :permission_resources, PermissionResource, on_replace: :delete
+    embeds_many :resources, Resource, on_replace: :delete
 
     timestamps()
   end
@@ -16,57 +15,30 @@ defmodule ExcmsRole.RolesService.Role do
   def changeset(role, attrs) do
     role
     |> cast(attrs, [:name])
-    |> cast_embed(:permission_resources)
+    |> cast_embed(:resources)
     |> validate_required([:name])
     |> unique_constraint(:name)
-    |> put_all_permissions()
+    |> put_all_resources()
   end
 
-  def get_permission_map(permission_resources) do
-    permission_resources
-    |> Enum.map(fn x ->
-      permission_actions =
-        x.permission_actions
-        |> Enum.map(fn y -> {y.name, y.access_level} end)
-        |> Map.new()
-
-      {x.name, permission_actions}
-    end)
-    |> Map.new()
-  end
-
-  def get_access_level(permission_map, resource_name, action) do
-    permission_map
-    |> Map.get(resource_name, %{})
-    |> Map.get(action, "no")
-  end
-
-  defp put_all_permissions(changeset) do
-    current_permissions =
-      changeset
-      |> get_field(:permission_resources, [])
-      |> get_permission_map()
+  defp put_all_resources(changeset) do
+    changeset_resources = get_field(changeset, :resources, [])
 
     resources =
       for resource <- Warehouse.resources() do
-        helpers = Warehouse.resource_to_helpers(resource)
+        helpers = Warehouse.resource_helpers(resource)
         resource_name = helpers.name()
 
-        actions =
-          for action <- helpers.actions() do
-            current_access_level = get_access_level(current_permissions, resource_name, action)
-
-            %PermissionAction{
-              name: action,
-              access_level: current_access_level,
-              access_level_options: helpers.access_levels(action)
-            }
+        changeset_resources
+        |> Enum.find(
+          %Resource{name: resource_name, actions: []},
+          fn changeset_resource ->
+            changeset_resource.name == resource_name
           end
-
-        %PermissionResource{name: resource_name, permission_actions: actions}
+        )
       end
 
-    put_embed(changeset, :permission_resources, resources)
+    put_embed(changeset, :resources, resources)
   end
 
   defmodule Helpers do

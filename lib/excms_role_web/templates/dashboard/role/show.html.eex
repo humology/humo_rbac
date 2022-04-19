@@ -5,7 +5,7 @@
   <%= @role.name %>
 </div>
 
-<% permission_map = get_permission_map(@role) %>
+<% resources_map = get_resources_map(@role) %>
 <%= for helpers <- @resources_helpers do %>
   <div class="row">
     <div class="form-group col-md-2">
@@ -15,11 +15,13 @@
     <%= for action <- helpers.actions() do %>
       <div class="form-group col-md-2">
         <strong><%= action %> :</strong>
-        <strong><%= get_access_level(permission_map, helpers, action) %></strong>
+        <strong><%= if action in (Map.get(resources_map, helpers.name(), %{}) |> Map.get(:actions, [])) do %>Yes<% else %>No<% end %></strong>
       </div>
     <% end %>
   </div>
 <% end %>
 
-<%= permitted_link @conn, "Edit", to: routes().dashboard_role_path(@conn, :edit, @role), class: "mr-1" %>
-<%= permitted_link @conn, "Back", to: routes().dashboard_role_path(@conn, :index) %>
+<%= can_link Plug.Conn.assign(@conn, :role, @role), "Edit",
+             to: routes().dashboard_role_path(@conn, :edit, @role),
+             class: "mr-1" %>
+<%= can_link @conn, "Back", to: routes().dashboard_role_path(@conn, :index) %>

@@ -15,24 +15,15 @@
   <br/>
 
   <div>
-    <%= inputs_for f, :permission_resources, fn f_resource -> %>
+    <%= inputs_for f, :resources, fn fr -> %>
       <div class="row">
         <div class="form-group col-md-2">
-          <%= hidden_input f_resource, :name %>
-          <strong><%= input_value f_resource, :name %></strong>
-          <%= error_tag f_resource, :name %>
+          <%= hidden_input fr, :name %>
+          <strong><%= input_value fr, :name %></strong>
+          <%= error_tag fr, :name %>
         </div>
-        <%= inputs_for f_resource, :permission_actions, fn f_action -> %>
-          <div class="form-group col-md-1">
-            <%= hidden_input f_action, :name %>
-            <%= input_value f_action, :name %>
-            <%= error_tag f_action, :name %>
-          </div>
-          <div class="form-group col-md-1">
-            <%= select f_action, :access_level, input_value(f_action, :access_level_options), class: "form-control" %>
-            <%= error_tag f_action, :access_level %>
-          </div>
-        <% end %>
+        <%= multiple_select fr, :actions, resource_actions_options(input_value(fr, :name)),
+            class: "form-control" %>
       </div>
     <% end %>
   </div>

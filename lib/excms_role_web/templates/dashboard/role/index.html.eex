@@ -13,13 +13,21 @@
         <td><%= role.name %></td>
 
         <td>
-          <%= permitted_link @conn, "Show", to: routes().dashboard_role_path(@conn, :show, role), class: "mr-1" %>
-          <%= permitted_link @conn, "Edit", to: routes().dashboard_role_path(@conn, :edit, role), class: "mr-1" %>
-          <%= permitted_link @conn, "Delete", to: routes().dashboard_role_path(@conn, :delete, role), method: :delete, data: [confirm: "Are you sure?"] %>
+          <%= can_link Plug.Conn.assign(@conn, :role, role), "Show",
+                       to: routes().dashboard_role_path(@conn, :show, role),
+                       class: "mr-1" %>
+          <%= can_link Plug.Conn.assign(@conn, :role, role), "Edit",
+                       to: routes().dashboard_role_path(@conn, :edit, role),
+                       class: "mr-1" %>
+          <%= can_link Plug.Conn.assign(@conn, :role, role), "Delete",
+                       to: routes().dashboard_role_path(@conn, :delete, role),
+                       method: :delete, data: [confirm: "Are you sure?"] %>
         </td>
       </tr>
     <% end %>
   </tbody>
 </table>
 
-<%= permitted_link @conn, "New Role", to: routes().dashboard_role_path(@conn, :new) %>
+<%= can_link @conn, "New Role",
+             to: routes().dashboard_role_path(@conn, :new),
+             class: "mr-1" %>

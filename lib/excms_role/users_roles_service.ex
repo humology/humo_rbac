@@ -9,20 +9,19 @@ defmodule ExcmsRole.UsersRolesService do
   alias ExcmsRole.UsersRolesService.User
   alias ExcmsRole.UsersRolesService.UserRole
   alias ExcmsRole.RolesService.Role
-  alias ExcmsCore.Warehouse
-  alias ExcmsCore.Permission
+  alias ExcmsCore.Authorizer
 
   @doc """
   Returns list of users by page, size and optional search query.
 
   ## Examples
 
-      iex> page_users(page, size, search)
+      iex> page_users(authorization, page, size, search)
       [%User{}, ...]
 
   """
-  def page_users(page, size, search) do
-    User
+  def page_users(authorization, page, size, search) do
+    Authorizer.can_all(authorization, "read", User)
     |> match_search(search)
     |> sort_by_inserted_at()
     |> paginate(page, size)
@@ -35,12 +34,12 @@ defmodule ExcmsRole.UsersRolesService do
 
   ## Examples
 
-      iex> count_users(search)
+      iex> count_users(authorization, search)
       3
 
   """
-  def count_users(search) do
-    User
+  def count_users(authorization, search) do
+    Authorizer.can_all(authorization, "read", User)
     |> match_search(search)
     |> do_count_users()
   end
@@ -65,53 +64,6 @@ defmodule ExcmsRole.UsersRolesService do
   end
 
   @doc """
-  Gets a single user with roles.
-
-  Returns nil if the User does not exist.
-
-  ## Examples
-
-      iex> get_user(123)
-      %User{roles: [%Role{}]}
-
-      iex> get_user(456)
-      nil
-
-  """
-  def get_user(id) do
-    Repo.get(User, id)
-    |> Repo.preload(:roles)
-  end
-
-  def get_permissions(id) do
-    get_user(id)
-    |> Map.fetch!(:roles)
-    |> roles_to_permissions()
-  end
-
-  defp roles_to_permissions(roles) do
-    names_resources = Warehouse.names_resources()
-
-    roles
-    |> Enum.map(fn role ->
-      role.permission_resources
-      |> Enum.filter(fn x -> Map.has_key?(names_resources, x.name) end)
-      |> Enum.flat_map(fn x ->
-        x.permission_actions
-        |> Enum.map(fn y ->
-          %{resource_name: x.name, action: y.name, access_level: y.access_level}
-        end)
-      end)
-      |> Enum.map(fn x ->
-        resource = Map.fetch!(names_resources, x.resource_name)
-        Permission.unsafe_new(resource, x.action, x.access_level)
-      end)
-      |> Enum.filter(fn x -> Permission.validate(x) == :ok end)
-    end)
-    |> Permission.union()
-  end
-
-  @doc """
   Updates a user_role.
 
   ## Examples
@@ -125,7 +77,7 @@ defmodule ExcmsRole.UsersRolesService do
   """
   def update_user(%User{} = user, attrs) do
     user
-    |> User.roles_changeset(attrs)
+    |> User.changeset(attrs)
     |> Repo.update()
   end
 
@@ -139,7 +91,7 @@ defmodule ExcmsRole.UsersRolesService do
 
   """
   def change_user(%User{} = user) do
-    User.roles_changeset(user, %{})
+    User.changeset(user, %{})
   end
 
   defp do_count_users(query) do

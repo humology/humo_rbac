@@ -8,7 +8,7 @@ defmodule ExcmsRole.UsersRolesService.User do
   @primary_key {:id, :binary_id, autogenerate: true}
   @derive {Inspect, only: [:id]}
 
-  schema "users" do
+  schema "excms_account_users" do
     field :first_name, :string
     field :last_name, :string
     field :email, :string
@@ -22,7 +22,7 @@ defmodule ExcmsRole.UsersRolesService.User do
     timestamps()
   end
 
-  def roles_changeset(user, attrs) do
+  def changeset(user, attrs) do
     user
     |> cast(attrs, [])
     |> put_assoc(:roles, get_roles(attrs))
@@ -33,5 +33,9 @@ defmodule ExcmsRole.UsersRolesService.User do
 
   defmodule Helpers do
     use ExcmsCore.EctoResourceHelpers
+
+    def name() do
+      "excms_role_users"
+    end
   end
 end

@@ -20,3 +20,6 @@ config :excms_role, ExcmsRoleWeb.Endpoint,
 
 # Print only warnings and errors during test
 config :logger, level: :warn
+
+config :excms_core, ExcmsCore.Authorizer,
+  authorizer: ExcmsCore.Authorizer.Mock

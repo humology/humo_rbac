@@ -1,18 +1,18 @@
 defmodule ExcmsRoleWeb.Dashboard.RoleView do
   use ExcmsRoleWeb, :view
-  alias ExcmsRole.RolesService.Role
 
-  def resources_with_commas(resources) do
-    resources
-    |> Enum.sort()
-    |> Enum.join(", ")
+  alias ExcmsCore.Warehouse
+
+  def get_resources_map(role) do
+    for resource <- role.resources, into: %{} do
+      {resource.name, resource}
+    end
   end
 
-  def get_access_level(permission_map, helpers, action) do
-    Role.get_access_level(permission_map, helpers.name(), action)
-  end
-
-  def get_permission_map(role) do
-    Role.get_permission_map(role.permission_resources)
+  def resource_actions_options(resource_name) do
+    Warehouse.names_resources()
+    |> Map.fetch!(resource_name)
+    |> Warehouse.resource_helpers()
+    |> apply(:actions, [])
   end
 end

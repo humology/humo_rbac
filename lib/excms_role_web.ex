@@ -23,8 +23,6 @@ defmodule ExcmsRoleWeb do
 
       import Plug.Conn
       import ExcmsRoleWeb.Gettext
-      use ExcmsCoreWeb.AccessController
-      alias ExcmsCore.Permission
     end
   end
 
@@ -70,7 +68,8 @@ defmodule ExcmsRoleWeb do
       import ExcmsRoleWeb.ErrorHelpers
       import ExcmsRoleWeb.Gettext
       import ExcmsCoreWeb, only: [routes: 0]
-      import ExcmsCoreWeb.AccessViewHelpers
+      import ExcmsCoreWeb.RouteAuthorizer
+      import ExcmsCoreWeb.AuthorizeViewHelpers
     end
   end
 

@@ -1,55 +1,153 @@
 defmodule ExcmsRoleWeb.Dashboard.UserRoleControllerTest do
-  use ExcmsRoleWeb.ConnCase
+  use ExcmsRoleWeb.ConnCase, async: true
 
   alias ExcmsRole.UsersRolesService
-  alias ExcmsRole.RolesService
+  alias ExcmsRole.UsersRolesService.User
+  alias ExcmsRole.RolesService.Role
+  alias ExcmsCore.Authorizer.{Mock, AllAccess, NoAccess}
 
-  setup %{conn: conn} do
-    user = insert(:admin_user)
+  setup do
+    role = insert(:role)
+    user = insert(:user)
 
-    conn = Plug.Test.init_test_session(conn, user_id: user.id)
-
-    %{conn: conn}
+    %{role: role, user: user}
   end
 
   describe "index" do
-    test "lists all users_roles", %{conn: conn} do
-      conn = get(conn, routes().dashboard_user_role_path(conn, :index))
-      assert html_response(conn, 200) =~ "<h3>Users roles</h3>"
-    end
-  end
+    test "render allowed links", %{conn: conn, user: user} do
+      for resource_can_actions <- [[], ["read"], ["update"], ["read", "update"]] do
+        fn ->
+          conn = get(conn, routes().dashboard_user_role_path(conn, :index))
 
-  describe "edit user_role" do
-    setup do
-      %{user: insert(:restricted_user)}
-    end
-
-    test "renders form for editing user roles", %{conn: conn, user: user} do
-      conn = get(conn, routes().dashboard_user_role_path(conn, :edit, user))
-      assert html_response(conn, 200) =~ "Edit User role"
-
-      assert [%{name: "restricted"}] = UsersRolesService.get_user!(user.id).roles
-    end
-  end
-
-  describe "update user_role" do
-    setup do
-      %{user: insert(:restricted_user)}
-    end
-
-    test "redirects when data is valid", %{conn: conn, user: user} do
-      [admin_role] =
-        RolesService.list_roles()
-        |> Enum.filter(&(&1.name == "administrator"))
-
-      conn =
-        put(conn, routes().dashboard_user_role_path(conn, :update, user.id),
-          user: %{roles: [admin_role.id]}
+          response = html_response(conn, 200)
+          assert response =~ "<h3>Users roles</h3>"
+          assert response =~ user.first_name
+          assert response =~ user.last_name
+          assert (response =~ "Show") == ("read" in resource_can_actions)
+          assert (response =~ "Edit") == ("update" in resource_can_actions)
+        end
+        |> Mock.with_mock(
+          can_all: fn _, "read", User -> User end,
+          can_actions: fn
+            _, %User{} -> resource_can_actions
+            _, {:list, User} -> ["read"]
+            _, {:list, Role} -> ["read"]
+            _, _ -> []
+          end
         )
+      end
+    end
 
-      assert redirected_to(conn) == routes().dashboard_user_role_path(conn, :show, user)
+    test "when list of record is empty, renders no user", %{conn: conn, user: user} do
+      fn ->
+        conn = get(conn, routes().dashboard_user_role_path(conn, :index))
 
-      assert [%{name: "administrator"}] = UsersRolesService.get_user!(user.id).roles
+        response = html_response(conn, 200)
+        assert response =~ "<h3>Users roles</h3>"
+        refute response =~ user.first_name
+        refute response =~ user.last_name
+        refute response =~ "Show"
+        refute response =~ "Edit"
+        refute response =~ "Delete"
+      end
+      |> Mock.with_mock(
+        can_all: fn _, "read", User -> ExcmsCore.Repo.none(User) end,
+        can_actions: &AllAccess.can_actions/2
+      )
+    end
+
+    test "no access", %{conn: conn} do
+      fn ->
+        conn = get(conn, routes().dashboard_user_role_path(conn, :index))
+
+        assert response(conn, 403) =~ "Forbidden"
+      end
+      |> Mock.with_mock(can_actions: &NoAccess.can_actions/2)
+    end
+  end
+
+  describe "show" do
+    test "renders show available actions", %{conn: conn, user: user} do
+      for record_can_actions <- [["read", "update"], ["read"]],
+          list_module_can_actions <- [["read"], []] do
+        fn ->
+          conn = get(conn, routes().dashboard_user_role_path(conn, :show, user))
+
+          response = html_response(conn, 200)
+          assert (response =~ "Edit") == ("update" in record_can_actions)
+          assert (response =~ "Back") == ("read" in list_module_can_actions)
+        end
+        |> Mock.with_mock(can_actions: fn
+          _, %User{} -> record_can_actions
+          _, {:list, User} -> list_module_can_actions
+          _, {:list, Role} -> ["read"]
+          _, _ -> []
+        end)
+      end
+    end
+
+    test "no access", %{conn: conn, user: user} do
+      fn ->
+        conn = get(conn, routes().dashboard_user_role_path(conn, :show, user))
+
+        assert response(conn, 403) =~ "Forbidden"
+      end
+      |> Mock.with_mock(can_actions: &NoAccess.can_actions/2)
+    end
+  end
+
+  describe "edit user roles" do
+    test "renders user edit form with allowed links", %{conn: conn, user: user} do
+      for list_module_can_actions <- [["read"], []] do
+        fn ->
+          conn = get(conn, routes().dashboard_user_role_path(conn, :edit, user))
+
+          response = html_response(conn, 200)
+          assert response =~ "<h3>Edit User roles</h3>"
+          assert (response =~ "Back") == ("read" in list_module_can_actions)
+        end
+        |> Mock.with_mock(
+          can_all: fn _, "read", Role -> Role end,
+          can_actions: fn
+            _, %User{} -> ["update"]
+            _, {:list, User} -> list_module_can_actions
+            _, {:list, Role} -> ["read"]
+            _, _ -> []
+          end
+        )
+      end
+    end
+
+    test "no access", %{conn: conn, user: user} do
+      fn ->
+        conn = get(conn, routes().dashboard_user_role_path(conn, :edit, user))
+        assert response(conn, 403) =~ "Forbidden"
+      end
+      |> Mock.with_mock(can_actions: &NoAccess.can_actions/2)
+    end
+  end
+
+  describe "update user roles" do
+    test "redirects when data is valid", %{conn: conn, user: user, role: role} do
+      fn ->
+        conn = put(conn, routes().dashboard_user_role_path(conn, :update, user), user: %{roles: [role.id]})
+        assert redirected_to(conn) == routes().dashboard_user_role_path(conn, :show, user)
+
+        user = UsersRolesService.get_user!(user.id)
+        assert [role] == user.roles
+      end
+      |> Mock.with_mock(can_actions: fn
+        _, %User{} -> ["update"]
+        _, {:list, Role} -> ["read"]
+      end)
+    end
+
+    test "no access", %{conn: conn, user: user, role: role} do
+      fn ->
+        conn = put(conn, routes().dashboard_user_role_path(conn, :update, user), user: %{roles: [role.id]})
+        assert response(conn, 403) =~ "Forbidden"
+      end
+      |> Mock.with_mock(can_actions: &NoAccess.can_actions/2)
     end
   end
 end

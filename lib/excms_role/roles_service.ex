@@ -7,18 +7,20 @@ defmodule ExcmsRole.RolesService do
   alias ExcmsCore.Repo
 
   alias ExcmsRole.RolesService.Role
+  alias ExcmsCore.Authorizer
 
   @doc """
   Returns the list of roles.
 
   ## Examples
 
-      iex> list_roles()
+      iex> list_roles(authorization)
       [%Role{}, ...]
 
   """
-  def list_roles do
-    Repo.all(Role)
+  def list_roles(authorization) do
+    Authorizer.can_all(authorization, "read", Role)
+    |> Repo.all()
   end
 
   @doc """

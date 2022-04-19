@@ -69,3 +69,6 @@ config :phoenix, :stacktrace_depth, 20
 
 # Initialize plugs at runtime for faster development compilation
 config :phoenix, :plug_init_mode, :runtime
+
+config :excms_core, ExcmsCore.Authorizer,
+  authorizer: ExcmsCore.Authorizer.AllAccess

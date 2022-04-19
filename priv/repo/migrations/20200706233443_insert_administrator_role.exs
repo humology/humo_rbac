@@ -3,18 +3,13 @@ defmodule ExcmsCore.Repo.Migrations.InsertAdministratorRole do
 
   def up do
     """
-    insert into roles("name", "permission_resources", "inserted_at", "updated_at")
-    values(
-      'administrator',
-      '[{"name": "global_access", "permission_actions": [{"name": "administrator", "access_level": "all"}]}]',
-      now(),
-      now()
-    )
+    insert into excms_role_roles("name", "resources", "inserted_at", "updated_at")
+    values('administrator', '[]', now(), now())
     """
     |> ExcmsCore.Repo.query()
   end
 
   def down do
-    ExcmsCore.Repo.query("delete from roles where name='administrator'")
+    ExcmsCore.Repo.query("delete from excms_role_roles where name='administrator'")
   end
 end
