@@ -67,9 +67,9 @@ defmodule ExcmsRoleWeb do
 
       import ExcmsRoleWeb.ErrorHelpers
       import ExcmsRoleWeb.Gettext
-      import ExcmsCoreWeb, only: [routes: 0]
-      import ExcmsCoreWeb.RouteAuthorizer
-      import ExcmsCoreWeb.AuthorizeViewHelpers
+      import HumoWeb, only: [routes: 0]
+      import HumoWeb.RouteAuthorizer
+      import HumoWeb.AuthorizeViewHelpers
     end
   end
 

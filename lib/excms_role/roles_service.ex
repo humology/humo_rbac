@@ -4,10 +4,10 @@ defmodule ExcmsRole.RolesService do
   """
 
   import Ecto.Query, warn: false
-  alias ExcmsCore.Repo
+  alias Humo.Repo
 
   alias ExcmsRole.RolesService.Role
-  alias ExcmsCore.Authorizer
+  alias Humo.Authorizer
 
   @doc """
   Returns the list of roles.

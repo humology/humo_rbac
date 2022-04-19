@@ -1,7 +1,7 @@
 defmodule ExcmsRoleWeb.Dashboard.RoleView do
   use ExcmsRoleWeb, :view
 
-  alias ExcmsCore.Warehouse
+  alias Humo.Warehouse
 
   def get_resources_map(role) do
     for resource <- role.resources, into: %{} do

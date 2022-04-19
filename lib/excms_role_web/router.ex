@@ -8,7 +8,7 @@ defmodule ExcmsRoleWeb.Router do
     plug :protect_from_forgery
     plug :put_secure_browser_headers
 
-    use ExcmsCoreWeb.BrowserPlugs, otp_app: :excms_role
+    use HumoWeb.BrowserPlugs, otp_app: :excms_role
   end
 
   pipeline :api do
@@ -21,7 +21,7 @@ defmodule ExcmsRoleWeb.Router do
     get "/", PageController, :index
   end
 
-  use ExcmsCoreWeb.PluginsRouter, otp_app: :excms_role
+  use HumoWeb.PluginsRouter, otp_app: :excms_role
 
   # Other scopes may use custom stacks.
   # scope "/api", ExcmsRoleWeb do

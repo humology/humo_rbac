@@ -4,9 +4,9 @@ defmodule ExcmsRole.RolesServiceTest do
   alias ExcmsRole.RolesService
   alias ExcmsRole.RolesService.Role
   alias ExcmsRole.RolesService.Resource
-  alias ExcmsCore.Authorizer.Mock
-  alias ExcmsCore.Authorizer.AllAccess
-  alias ExcmsCore.Authorizer.NoAccess
+  alias Humo.Authorizer.Mock
+  alias Humo.Authorizer.AllAccess
+  alias Humo.Authorizer.NoAccess
 
   @valid_attrs %{name: "some name", resources: []}
   @update_attrs %{

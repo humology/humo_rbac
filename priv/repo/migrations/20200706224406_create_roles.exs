@@ -1,4 +1,4 @@
-defmodule ExcmsCore.Repo.Migrations.CreateRoles do
+defmodule Humo.Repo.Migrations.CreateRoles do
   use Ecto.Migration
 
   def change do

@@ -24,7 +24,7 @@ defmodule ExcmsRoleWeb.ConnCase do
       import Phoenix.ConnTest
       import ExcmsRoleWeb.ConnCase
 
-      import ExcmsCoreWeb, only: [routes: 0]
+      import HumoWeb, only: [routes: 0]
       import ExcmsRole.Factory
 
       # The default endpoint for testing
@@ -33,10 +33,10 @@ defmodule ExcmsRoleWeb.ConnCase do
   end
 
   setup tags do
-    :ok = Ecto.Adapters.SQL.Sandbox.checkout(ExcmsCore.Repo)
+    :ok = Ecto.Adapters.SQL.Sandbox.checkout(Humo.Repo)
 
     unless tags[:async] do
-      Ecto.Adapters.SQL.Sandbox.mode(ExcmsCore.Repo, {:shared, self()})
+      Ecto.Adapters.SQL.Sandbox.mode(Humo.Repo, {:shared, self()})
     end
 
     {:ok, conn: Phoenix.ConnTest.build_conn()}

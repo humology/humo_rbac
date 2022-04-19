@@ -1,7 +1,7 @@
 import Config
 
 # Configure your database
-config :excms_core, ExcmsCore.Repo,
+config :humo, Humo.Repo,
   username: "postgres",
   password: "postgres",
   database: "excms_role_dev",
@@ -70,5 +70,5 @@ config :phoenix, :stacktrace_depth, 20
 # Initialize plugs at runtime for faster development compilation
 config :phoenix, :plug_init_mode, :runtime
 
-config :excms_core, ExcmsCore.Authorizer,
-  authorizer: ExcmsCore.Authorizer.AllAccess
+config :humo, Humo.Authorizer,
+  authorizer: Humo.Authorizer.AllAccess

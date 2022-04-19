@@ -1,7 +1,7 @@
 defmodule ExcmsRole.RolesService.Role do
   use Ecto.Schema
   import Ecto.Changeset
-  alias ExcmsCore.Warehouse
+  alias Humo.Warehouse
   alias ExcmsRole.RolesService.Resource
 
   schema "excms_role_roles" do
@@ -42,6 +42,6 @@ defmodule ExcmsRole.RolesService.Role do
   end
 
   defmodule Helpers do
-    use ExcmsCore.EctoResourceHelpers
+    use Humo.EctoResourceHelpers
   end
 end

@@ -5,7 +5,7 @@ import Config
 # The MIX_TEST_PARTITION environment variable can be used
 # to provide built-in test partitioning in CI environment.
 # Run `mix help test` for more information.
-config :excms_core, ExcmsCore.Repo,
+config :humo, Humo.Repo,
   username: "postgres",
   password: "postgres",
   database: "excms_role_test#{System.get_env("MIX_TEST_PARTITION")}",
@@ -21,5 +21,5 @@ config :excms_role, ExcmsRoleWeb.Endpoint,
 # Print only warnings and errors during test
 config :logger, level: :warn
 
-config :excms_core, ExcmsCore.Authorizer,
-  authorizer: ExcmsCore.Authorizer.Mock
+config :humo, Humo.Authorizer,
+  authorizer: Humo.Authorizer.Mock

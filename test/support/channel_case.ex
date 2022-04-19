@@ -29,10 +29,10 @@ defmodule ExcmsRoleWeb.ChannelCase do
   end
 
   setup tags do
-    :ok = Ecto.Adapters.SQL.Sandbox.checkout(ExcmsCore.Repo)
+    :ok = Ecto.Adapters.SQL.Sandbox.checkout(Humo.Repo)
 
     unless tags[:async] do
-      Ecto.Adapters.SQL.Sandbox.mode(ExcmsCore.Repo, {:shared, self()})
+      Ecto.Adapters.SQL.Sandbox.mode(Humo.Repo, {:shared, self()})
     end
 
     :ok

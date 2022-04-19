@@ -5,14 +5,14 @@ defmodule ExcmsRoleWeb.Dashboard.UserRoleController do
   alias ExcmsRole.UsersRolesService.User
   alias ExcmsRole.RolesService
   alias ExcmsRole.RolesService.Role
-  alias ExcmsCoreWeb.AuthorizationExtractor
-  import ExcmsCoreWeb, only: [routes: 0]
+  alias HumoWeb.AuthorizationExtractor
+  import HumoWeb, only: [routes: 0]
 
   @page_size 50
 
   plug :assign_user when action in [:show, :edit, :update, :delete]
 
-  use ExcmsCoreWeb.AuthorizeControllerHelpers,
+  use HumoWeb.AuthorizeControllerHelpers,
     resource_module: User,
     resource_assign_key: :user
 

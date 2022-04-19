@@ -1,6 +1,6 @@
 defmodule ExcmsRole.UsersRolesService.UserRole do
   use Ecto.Schema
-  alias ExcmsAccount.UsersService.User
+  alias HumoAccount.UsersService.User
   alias ExcmsRole.RolesService.Role
 
   schema "excms_role_users_roles" do
@@ -11,6 +11,6 @@ defmodule ExcmsRole.UsersRolesService.UserRole do
   end
 
   defmodule Helpers do
-    use ExcmsCore.EctoResourceHelpers
+    use Humo.EctoResourceHelpers
   end
 end

@@ -8,7 +8,7 @@ defmodule ExcmsRole.UsersRolesService.User do
   @primary_key {:id, :binary_id, autogenerate: true}
   @derive {Inspect, only: [:id]}
 
-  schema "excms_account_users" do
+  schema "humo_account_users" do
     field :first_name, :string
     field :last_name, :string
     field :email, :string
@@ -32,7 +32,7 @@ defmodule ExcmsRole.UsersRolesService.User do
   defp get_roles(_), do: []
 
   defmodule Helpers do
-    use ExcmsCore.EctoResourceHelpers
+    use Humo.EctoResourceHelpers
 
     def name() do
       "excms_role_users"

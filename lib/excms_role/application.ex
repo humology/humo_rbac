@@ -12,7 +12,7 @@ defmodule ExcmsRole.Application do
       # {ExcmsRole.Worker, arg}
     ]
 
-    children = if ExcmsCore.is_server_app_module(__MODULE__) do
+    children = if Humo.is_server_app_module(__MODULE__) do
       children ++ [
         # Start the PubSub system
         {Phoenix.PubSub, name: ExcmsRole.PubSub},

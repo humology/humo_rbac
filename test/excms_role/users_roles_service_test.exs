@@ -3,9 +3,9 @@ defmodule ExcmsRole.UsersRolesServiceTest do
 
   alias ExcmsRole.UsersRolesService
   alias ExcmsRole.UsersRolesService.User
-  alias ExcmsCore.Authorizer.Mock
-  alias ExcmsCore.Authorizer.AllAccess
-  alias ExcmsCore.Authorizer.NoAccess
+  alias Humo.Authorizer.Mock
+  alias Humo.Authorizer.AllAccess
+  alias Humo.Authorizer.NoAccess
 
   describe "page_users/4" do
     setup do

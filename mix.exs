@@ -49,8 +49,8 @@ defmodule ExcmsRole.MixProject do
       {:esbuild, "~> 0.3", runtime: Mix.env() == :dev},
       {:bamboo, "~> 1.5"},
       {:bamboo_smtp, "~> 2.1.0"},
-      {:excms_core, git: "git@github.com:excms/excms_core.git"},
-      {:excms_account, git: "git@github.com:excms/excms_account.git"}
+      {:humo, git: "git@github.com:humology/humo.git"},
+      {:humo_account, git: "git@github.com:humology/humo_account.git"}
     ]
   end
 
@@ -63,12 +63,12 @@ defmodule ExcmsRole.MixProject do
   defp aliases do
     [
       setup: ["deps.setup", "cmd mix rest.setup"],
-      "deps.setup": ["deps.get", "excms.deps.config.gen"],
+      "deps.setup": ["deps.get", "humo.deps.config.gen"],
       "rest.setup": ["ecto.setup", "assets.setup"],
-      "assets.setup": ["excms.assets.gen", "excms.npm.install"],
-      "ecto.setup": ["ecto.create", "excms.ecto.migrate", "run priv/repo/seeds.exs"],
+      "assets.setup": ["humo.assets.gen", "humo.npm.install"],
+      "ecto.setup": ["ecto.create", "humo.ecto.migrate", "run priv/repo/seeds.exs"],
       "ecto.reset": ["ecto.drop", "ecto.setup"],
-      test: ["ecto.create --quiet", "excms.ecto.migrate", "test"],
+      test: ["ecto.create --quiet", "humo.ecto.migrate", "test"],
       "assets.deploy": ["esbuild default --minify", "phx.digest"]
     ]
   end

@@ -1,7 +1,7 @@
 defmodule ExcmsRole.Factory do
   alias ExcmsRole.UsersRolesService.User
   alias ExcmsRole.RolesService.Role
-  alias ExcmsCore.Repo
+  alias Humo.Repo
 
 
   def insert(resource, params \\ [])

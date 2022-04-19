@@ -4,7 +4,7 @@ defmodule ExcmsRoleWeb.Dashboard.UserRoleControllerTest do
   alias ExcmsRole.UsersRolesService
   alias ExcmsRole.UsersRolesService.User
   alias ExcmsRole.RolesService.Role
-  alias ExcmsCore.Authorizer.{Mock, AllAccess, NoAccess}
+  alias Humo.Authorizer.{Mock, AllAccess, NoAccess}
 
   setup do
     role = insert(:role)
@@ -51,7 +51,7 @@ defmodule ExcmsRoleWeb.Dashboard.UserRoleControllerTest do
         refute response =~ "Delete"
       end
       |> Mock.with_mock(
-        can_all: fn _, "read", User -> ExcmsCore.Repo.none(User) end,
+        can_all: fn _, "read", User -> Humo.Repo.none(User) end,
         can_actions: &AllAccess.can_actions/2
       )
     end

@@ -3,14 +3,14 @@ defmodule ExcmsRoleWeb.Dashboard.RoleController do
 
   alias ExcmsRole.RolesService
   alias ExcmsRole.RolesService.Role
-  alias ExcmsCore.Warehouse
-  alias ExcmsCoreWeb.AuthorizationExtractor
-  import ExcmsCoreWeb, only: [routes: 0]
+  alias Humo.Warehouse
+  alias HumoWeb.AuthorizationExtractor
+  import HumoWeb, only: [routes: 0]
 
   plug :load_resources
   plug :assign_role when action in [:show, :edit, :update, :delete]
 
-  use ExcmsCoreWeb.AuthorizeControllerHelpers,
+  use HumoWeb.AuthorizeControllerHelpers,
     resource_module: Role,
     resource_assign_key: :role
 

@@ -2,9 +2,9 @@ import Config
 
 # Configure Mix tasks and generators
 config :excms_role,
-  ecto_repos: [ExcmsCore.Repo]
+  ecto_repos: [Humo.Repo]
 
-config :excms_core, :plugins,
+config :humo, :plugins,
   excms_role: %{
     title: "Roles",
     dashboard_links: [
@@ -13,16 +13,16 @@ config :excms_core, :plugins,
     ]
   }
 
-config :excms_core, ExcmsCoreWeb.PluginsRouter,
+config :humo, HumoWeb.PluginsRouter,
   excms_role: %{
     dashboard_routers: [ExcmsRoleWeb.Routers.Dashboard]
   }
 
-config :excms_core, ExcmsCoreWeb.BrowserPlugs,
-  excms_core: [{ExcmsCoreWeb.SetAdministratorPlug, false}],
+config :humo, HumoWeb.BrowserPlugs,
+  humo: [{HumoWeb.SetAdministratorPlug, false}],
   excms_role: [{ExcmsRoleWeb.AuthorizePlug, true}]
 
-config :excms_core, ExcmsCore.Warehouse,
+config :humo, Humo.Warehouse,
   excms_role: [
     ExcmsRole.RolesService.Role,
     ExcmsRole.UsersRolesService.User

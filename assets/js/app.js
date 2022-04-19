@@ -1,3 +1,3 @@
-import "excms_core"
-import "excms_account"
+import "humo"
+import "humo_account"
 import "./plugin"

@@ -3,7 +3,7 @@ defmodule ExcmsRoleWeb.Dashboard.RoleControllerTest do
 
   alias ExcmsRole.RolesService
   alias ExcmsRole.RolesService.Role
-  alias ExcmsCore.Authorizer.{Mock, AllAccess, NoAccess}
+  alias Humo.Authorizer.{Mock, AllAccess, NoAccess}
 
   @create_attrs %{
     name: "some name",
@@ -57,7 +57,7 @@ defmodule ExcmsRoleWeb.Dashboard.RoleControllerTest do
 
       end
       |> Mock.with_mock(
-        can_all: fn _, "read", Role -> ExcmsCore.Repo.none(Role) end,
+        can_all: fn _, "read", Role -> Humo.Repo.none(Role) end,
         can_actions: &AllAccess.can_actions/2
       )
     end

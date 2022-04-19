@@ -1,9 +1,9 @@
-defmodule ExcmsCore.Repo.Migrations.CreateUsersRoles do
+defmodule Humo.Repo.Migrations.CreateUsersRoles do
   use Ecto.Migration
 
   def change do
     create table(:excms_role_users_roles) do
-      add :user_id, references(:excms_account_users, type: :binary_id, on_delete: :delete_all), null: false
+      add :user_id, references(:humo_account_users, type: :binary_id, on_delete: :delete_all), null: false
       add :role_id, references(:excms_role_roles, on_delete: :delete_all), null: false
 
       timestamps(updated_at: false)

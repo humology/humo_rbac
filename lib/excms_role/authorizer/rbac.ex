@@ -1,8 +1,8 @@
 defmodule ExcmsRole.Authorizer.RBAC do
-  use ExcmsCore.Authorizer.Behaviour
-  alias ExcmsCore.Repo
+  use Humo.Authorizer.Behaviour
+  alias Humo.Repo
   alias ExcmsRole.RBACAuthorization
-  alias ExcmsCore.Warehouse
+  alias Humo.Warehouse
 
   @moduledoc """
   RBAC policy gives access based on roles permissions

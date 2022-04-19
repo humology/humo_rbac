@@ -18,7 +18,7 @@ defmodule ExcmsRole.DataCase do
 
   using do
     quote do
-      alias ExcmsCore.Repo
+      alias Humo.Repo
 
       import Ecto
       import Ecto.Changeset
@@ -29,10 +29,10 @@ defmodule ExcmsRole.DataCase do
   end
 
   setup tags do
-    :ok = Ecto.Adapters.SQL.Sandbox.checkout(ExcmsCore.Repo)
+    :ok = Ecto.Adapters.SQL.Sandbox.checkout(Humo.Repo)
 
     unless tags[:async] do
-      Ecto.Adapters.SQL.Sandbox.mode(ExcmsCore.Repo, {:shared, self()})
+      Ecto.Adapters.SQL.Sandbox.mode(Humo.Repo, {:shared, self()})
     end
 
     :ok

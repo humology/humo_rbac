@@ -4,12 +4,12 @@ defmodule ExcmsRole.UsersRolesService do
   """
 
   import Ecto.Query, warn: false
-  alias ExcmsCore.Repo
+  alias Humo.Repo
 
   alias ExcmsRole.UsersRolesService.User
   alias ExcmsRole.UsersRolesService.UserRole
   alias ExcmsRole.RolesService.Role
-  alias ExcmsCore.Authorizer
+  alias Humo.Authorizer
 
   @doc """
   Returns list of users by page, size and optional search query.

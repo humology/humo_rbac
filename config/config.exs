@@ -33,12 +33,12 @@ config :logger, :console,
   format: "$time $metadata[$level] $message\n",
   metadata: [:request_id]
 
-config :excms_account, ExcmsAccountWeb.AuthService,
+config :humo_account, HumoAccountWeb.AuthService,
   timeout_seconds: 3600 * 24,
   secret: "sKKlOpvwOwHg+cTLFO4byayYBUWEBGCJGjgGTjdRWYkTVPNGi9gnlYAmVCWo9mVnDhgT",
   salt: "JghkDhKAHTBDTVtbtdsOTtdsgtOPGqKSHvBtGHTDgh"
 
-config :excms_account, ExcmsAccountWeb.Mailer,
+config :humo_account, HumoAccountWeb.Mailer,
   adapter: Bamboo.SMTPAdapter,
   tls: :if_available,
   allowed_tls_versions: [:tlsv1, :"tlsv1.1", :"tlsv1.2"],
