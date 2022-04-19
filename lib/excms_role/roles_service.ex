@@ -1,4 +1,4 @@
-defmodule ExcmsRole.RolesService do
+defmodule HumoRBAC.RolesService do
   @moduledoc """
   The RolesService context.
   """
@@ -6,7 +6,7 @@ defmodule ExcmsRole.RolesService do
   import Ecto.Query, warn: false
   alias Humo.Repo
 
-  alias ExcmsRole.RolesService.Role
+  alias HumoRBAC.RolesService.Role
   alias Humo.Authorizer
 
   @doc """

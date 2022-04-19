@@ -1,4 +1,4 @@
-defmodule ExcmsRoleWeb.ErrorHelpers do
+defmodule HumoRBACWeb.ErrorHelpers do
   @moduledoc """
   Conveniences for translating and building error messages.
   """
@@ -39,9 +39,9 @@ defmodule ExcmsRoleWeb.ErrorHelpers do
     # should be written to the errors.po file. The :count option is
     # set by Ecto and indicates we should also apply plural rules.
     if count = opts[:count] do
-      Gettext.dngettext(ExcmsRoleWeb.Gettext, "errors", msg, msg, count, opts)
+      Gettext.dngettext(HumoRBACWeb.Gettext, "errors", msg, msg, count, opts)
     else
-      Gettext.dgettext(ExcmsRoleWeb.Gettext, "errors", msg, opts)
+      Gettext.dgettext(HumoRBACWeb.Gettext, "errors", msg, opts)
     end
   end
 end

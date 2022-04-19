@@ -1,6 +1,6 @@
-defmodule ExcmsRole do
+defmodule HumoRBAC do
   @moduledoc """
-  ExcmsRole keeps the contexts that define your domain
+  HumoRBAC keeps the contexts that define your domain
   and business logic.
 
   Contexts are also responsible for managing your data, regardless

@@ -1,5 +1,5 @@
-defmodule ExcmsRoleWeb.PageControllerTest do
-  use ExcmsRoleWeb.ConnCase
+defmodule HumoRBACWeb.PageControllerTest do
+  use HumoRBACWeb.ConnCase
 
   test "GET /", %{conn: conn} do
     conn = get(conn, "/")

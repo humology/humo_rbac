@@ -1,5 +1,5 @@
-defmodule ExcmsRoleWeb.Router do
-  use ExcmsRoleWeb, :router
+defmodule HumoRBACWeb.Router do
+  use HumoRBACWeb, :router
 
   pipeline :browser do
     plug :accepts, ["html"]
@@ -8,23 +8,23 @@ defmodule ExcmsRoleWeb.Router do
     plug :protect_from_forgery
     plug :put_secure_browser_headers
 
-    use HumoWeb.BrowserPlugs, otp_app: :excms_role
+    use HumoWeb.BrowserPlugs, otp_app: :humo_rbac
   end
 
   pipeline :api do
     plug :accepts, ["json"]
   end
 
-  scope "/", ExcmsRoleWeb do
+  scope "/", HumoRBACWeb do
     pipe_through :browser
 
     get "/", PageController, :index
   end
 
-  use HumoWeb.PluginsRouter, otp_app: :excms_role
+  use HumoWeb.PluginsRouter, otp_app: :humo_rbac
 
   # Other scopes may use custom stacks.
-  # scope "/api", ExcmsRoleWeb do
+  # scope "/api", HumoRBACWeb do
   #   pipe_through :api
   # end
 
@@ -40,7 +40,7 @@ defmodule ExcmsRoleWeb.Router do
 
     scope "/" do
       pipe_through :browser
-      live_dashboard "/dashboard", metrics: ExcmsRoleWeb.Telemetry
+      live_dashboard "/dashboard", metrics: HumoRBACWeb.Telemetry
     end
   end
 end

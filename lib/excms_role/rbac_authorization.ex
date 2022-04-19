@@ -1,4 +1,4 @@
-defmodule ExcmsRole.RBACAuthorization do
+defmodule HumoRBAC.RBACAuthorization do
   defstruct is_administrator: false,
             authorized_resource_actions: %{}
 

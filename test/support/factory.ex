@@ -1,6 +1,6 @@
-defmodule ExcmsRole.Factory do
-  alias ExcmsRole.UsersRolesService.User
-  alias ExcmsRole.RolesService.Role
+defmodule HumoRBAC.Factory do
+  alias HumoRBAC.UsersRolesService.User
+  alias HumoRBAC.RolesService.Role
   alias Humo.Repo
 
 

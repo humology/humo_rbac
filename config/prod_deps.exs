@@ -4,9 +4,9 @@ config :humo, Humo,
   deps: [
     %{app: :humo, path: "deps/humo"},
     %{app: :humo_account, path: "deps/humo_account"},
-    %{app: :excms_role, path: "./"}
+    %{app: :humo_rbac, path: "./"}
   ],
-  server_app: :excms_role
+  server_app: :humo_rbac
 
 if Path.expand("../deps/humo/config/plugin.exs", __DIR__) |> File.exists?(), do:
   import_config "../deps/humo/config/plugin.exs"

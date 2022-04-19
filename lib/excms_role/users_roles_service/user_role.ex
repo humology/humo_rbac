@@ -1,9 +1,9 @@
-defmodule ExcmsRole.UsersRolesService.UserRole do
+defmodule HumoRBAC.UsersRolesService.UserRole do
   use Ecto.Schema
   alias HumoAccount.UsersService.User
-  alias ExcmsRole.RolesService.Role
+  alias HumoRBAC.RolesService.Role
 
-  schema "excms_role_users_roles" do
+  schema "humo_rbac_users_roles" do
     belongs_to :user, User, type: :binary_id
     belongs_to :role, Role
 

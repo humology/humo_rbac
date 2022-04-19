@@ -1,9 +1,9 @@
-defmodule ExcmsRole.RBACAuthorizationTest do
-  use ExcmsRole.DataCase
+defmodule HumoRBAC.RBACAuthorizationTest do
+  use HumoRBAC.DataCase
 
-  alias ExcmsRole.RBACAuthorization
-  alias ExcmsRole.RolesService.Role
-  alias ExcmsRole.RolesService.Resource
+  alias HumoRBAC.RBACAuthorization
+  alias HumoRBAC.RolesService.Role
+  alias HumoRBAC.RolesService.Resource
 
   describe "from_roles/1" do
     test "when roles is empty list, no permission" do
@@ -19,7 +19,7 @@ defmodule ExcmsRole.RBACAuthorizationTest do
           name: "full_role_access",
           resources: [
             %Resource{
-              name: "excms_role_roles",
+              name: "humo_rbac_roles",
               actions: ["create", "read", "update", "delete"]
             }
           ]

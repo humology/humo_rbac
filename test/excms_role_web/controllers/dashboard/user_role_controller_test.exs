@@ -1,9 +1,9 @@
-defmodule ExcmsRoleWeb.Dashboard.UserRoleControllerTest do
-  use ExcmsRoleWeb.ConnCase, async: true
+defmodule HumoRBACWeb.Dashboard.UserRoleControllerTest do
+  use HumoRBACWeb.ConnCase, async: true
 
-  alias ExcmsRole.UsersRolesService
-  alias ExcmsRole.UsersRolesService.User
-  alias ExcmsRole.RolesService.Role
+  alias HumoRBAC.UsersRolesService
+  alias HumoRBAC.UsersRolesService.User
+  alias HumoRBAC.RolesService.Role
   alias Humo.Authorizer.{Mock, AllAccess, NoAccess}
 
   setup do

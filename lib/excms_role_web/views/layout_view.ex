@@ -1,3 +1,3 @@
-defmodule ExcmsRoleWeb.LayoutView do
-  use ExcmsRoleWeb, :view
+defmodule HumoRBACWeb.LayoutView do
+  use HumoRBACWeb, :view
 end

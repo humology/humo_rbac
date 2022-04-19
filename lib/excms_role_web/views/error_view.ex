@@ -1,5 +1,5 @@
-defmodule ExcmsRoleWeb.ErrorView do
-  use ExcmsRoleWeb, :view
+defmodule HumoRBACWeb.ErrorView do
+  use HumoRBACWeb, :view
 
   # If you want to customize a particular status code
   # for a certain format, you may uncomment below.

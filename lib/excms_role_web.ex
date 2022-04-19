@@ -1,12 +1,12 @@
-defmodule ExcmsRoleWeb do
+defmodule HumoRBACWeb do
   @moduledoc """
   The entrypoint for defining your web interface, such
   as controllers, views, channels and so on.
 
   This can be used in your application as:
 
-      use ExcmsRoleWeb, :controller
-      use ExcmsRoleWeb, :view
+      use HumoRBACWeb, :controller
+      use HumoRBACWeb, :view
 
   The definitions below will be executed for every view,
   controller, etc, so keep them short and clean, focused
@@ -19,18 +19,18 @@ defmodule ExcmsRoleWeb do
 
   def controller do
     quote do
-      use Phoenix.Controller, namespace: ExcmsRoleWeb
+      use Phoenix.Controller, namespace: HumoRBACWeb
 
       import Plug.Conn
-      import ExcmsRoleWeb.Gettext
+      import HumoRBACWeb.Gettext
     end
   end
 
   def view do
     quote do
       use Phoenix.View,
-        root: "lib/excms_role_web/templates",
-        namespace: ExcmsRoleWeb
+        root: "lib/humo_rbac_web/templates",
+        namespace: HumoRBACWeb
 
       # Import convenience functions from controllers
       import Phoenix.Controller,
@@ -53,7 +53,7 @@ defmodule ExcmsRoleWeb do
   def channel do
     quote do
       use Phoenix.Channel
-      import ExcmsRoleWeb.Gettext
+      import HumoRBACWeb.Gettext
     end
   end
 
@@ -65,8 +65,8 @@ defmodule ExcmsRoleWeb do
       # Import basic rendering functionality (render, render_layout, etc)
       import Phoenix.View
 
-      import ExcmsRoleWeb.ErrorHelpers
-      import ExcmsRoleWeb.Gettext
+      import HumoRBACWeb.ErrorHelpers
+      import HumoRBACWeb.Gettext
       import HumoWeb, only: [routes: 0]
       import HumoWeb.RouteAuthorizer
       import HumoWeb.AuthorizeViewHelpers

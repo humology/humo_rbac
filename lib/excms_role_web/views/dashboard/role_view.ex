@@ -1,5 +1,5 @@
-defmodule ExcmsRoleWeb.Dashboard.RoleView do
-  use ExcmsRoleWeb, :view
+defmodule HumoRBACWeb.Dashboard.RoleView do
+  use HumoRBACWeb, :view
 
   alias Humo.Warehouse
 

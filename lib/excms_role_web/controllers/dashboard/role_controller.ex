@@ -1,8 +1,8 @@
-defmodule ExcmsRoleWeb.Dashboard.RoleController do
-  use ExcmsRoleWeb, :controller
+defmodule HumoRBACWeb.Dashboard.RoleController do
+  use HumoRBACWeb, :controller
 
-  alias ExcmsRole.RolesService
-  alias ExcmsRole.RolesService.Role
+  alias HumoRBAC.RolesService
+  alias HumoRBAC.RolesService.Role
   alias Humo.Warehouse
   alias HumoWeb.AuthorizationExtractor
   import HumoWeb, only: [routes: 0]

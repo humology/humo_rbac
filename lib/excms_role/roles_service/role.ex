@@ -1,10 +1,10 @@
-defmodule ExcmsRole.RolesService.Role do
+defmodule HumoRBAC.RolesService.Role do
   use Ecto.Schema
   import Ecto.Changeset
   alias Humo.Warehouse
-  alias ExcmsRole.RolesService.Resource
+  alias HumoRBAC.RolesService.Resource
 
-  schema "excms_role_roles" do
+  schema "humo_rbac_roles" do
     field :name, :string
     embeds_many :resources, Resource, on_replace: :delete
 

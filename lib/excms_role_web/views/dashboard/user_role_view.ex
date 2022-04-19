@@ -1,5 +1,5 @@
-defmodule ExcmsRoleWeb.Dashboard.UserRoleView do
-  use ExcmsRoleWeb, :view
+defmodule HumoRBACWeb.Dashboard.UserRoleView do
+  use HumoRBACWeb, :view
 
   def roles_options(items) do
     for item <- items do

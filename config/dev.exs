@@ -4,7 +4,7 @@ import Config
 config :humo, Humo.Repo,
   username: "postgres",
   password: "postgres",
-  database: "excms_role_dev",
+  database: "humo_rbac_dev",
   hostname: "localhost",
   show_sensitive_data_on_connection_error: true,
   pool_size: 10
@@ -12,7 +12,7 @@ config :humo, Humo.Repo,
 # The watchers configuration can be used to run external
 # watchers to your application. For example, we use it
 # with esbuild to bundle .js and .css sources.
-config :excms_role, ExcmsRoleWeb.Endpoint,
+config :humo_rbac, HumoRBACWeb.Endpoint,
   # Binding to loopback ipv4 address prevents access from other machines.
   # Change to `ip: {0, 0, 0, 0}` to allow access from other machines.
   http: [ip: {0, 0, 0, 0}, port: 4000],
@@ -50,13 +50,13 @@ config :excms_role, ExcmsRoleWeb.Endpoint,
 # different ports.
 
 # Watch static and templates for browser reloading.
-config :excms_role, ExcmsRoleWeb.Endpoint,
+config :humo_rbac, HumoRBACWeb.Endpoint,
   live_reload: [
     patterns: [
       ~r"priv/static/.*(js|css|png|jpeg|jpg|gif|svg)$",
       ~r"priv/gettext/.*(po)$",
-      ~r"lib/excms_role_web/(live|views)/.*(ex)$",
-      ~r"lib/excms_role_web/templates/.*(eex)$"
+      ~r"lib/humo_rbac_web/(live|views)/.*(ex)$",
+      ~r"lib/humo_rbac_web/templates/.*(eex)$"
     ]
   ]
 

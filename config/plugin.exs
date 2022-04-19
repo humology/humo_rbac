@@ -1,11 +1,11 @@
 import Config
 
 # Configure Mix tasks and generators
-config :excms_role,
+config :humo_rbac,
   ecto_repos: [Humo.Repo]
 
 config :humo, :plugins,
-  excms_role: %{
+  humo_rbac: %{
     title: "Roles",
     dashboard_links: [
       %{title: "Roles", route: :dashboard_role_path, action: :index},
@@ -14,16 +14,16 @@ config :humo, :plugins,
   }
 
 config :humo, HumoWeb.PluginsRouter,
-  excms_role: %{
-    dashboard_routers: [ExcmsRoleWeb.Routers.Dashboard]
+  humo_rbac: %{
+    dashboard_routers: [HumoRBACWeb.Routers.Dashboard]
   }
 
 config :humo, HumoWeb.BrowserPlugs,
   humo: [{HumoWeb.SetAdministratorPlug, false}],
-  excms_role: [{ExcmsRoleWeb.AuthorizePlug, true}]
+  humo_rbac: [{HumoRBACWeb.AuthorizePlug, true}]
 
 config :humo, Humo.Warehouse,
-  excms_role: [
-    ExcmsRole.RolesService.Role,
-    ExcmsRole.UsersRolesService.User
+  humo_rbac: [
+    HumoRBAC.RolesService.Role,
+    HumoRBAC.UsersRolesService.User
   ]

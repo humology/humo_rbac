@@ -1,16 +1,16 @@
-defmodule ExcmsRoleWeb.Endpoint do
-  use Phoenix.Endpoint, otp_app: :excms_role
+defmodule HumoRBACWeb.Endpoint do
+  use Phoenix.Endpoint, otp_app: :humo_rbac
 
   # The session will be stored in the cookie and signed,
   # this means its contents can be read but not tampered with.
   # Set :encryption_salt if you would also like to encrypt it.
   @session_options [
     store: :cookie,
-    key: "_excms_role_key",
+    key: "_humo_rbac_key",
     signing_salt: "9gvidbAL"
   ]
 
-  socket "/socket", ExcmsRoleWeb.UserSocket,
+  socket "/socket", HumoRBACWeb.UserSocket,
     websocket: true,
     longpoll: false
 
@@ -22,7 +22,7 @@ defmodule ExcmsRoleWeb.Endpoint do
   # when deploying your static files in production.
   plug Plug.Static,
     at: "/",
-    from: :excms_role,
+    from: :humo_rbac,
     gzip: false,
     only: ~w(assets fonts images favicon.ico robots.txt)
 
@@ -32,7 +32,7 @@ defmodule ExcmsRoleWeb.Endpoint do
     socket "/phoenix/live_reload/socket", Phoenix.LiveReloader.Socket
     plug Phoenix.LiveReloader
     plug Phoenix.CodeReloader
-    plug Phoenix.Ecto.CheckRepoStatus, otp_app: :excms_role
+    plug Phoenix.Ecto.CheckRepoStatus, otp_app: :humo_rbac
   end
 
   plug Phoenix.LiveDashboard.RequestLogger,
@@ -50,5 +50,5 @@ defmodule ExcmsRoleWeb.Endpoint do
   plug Plug.MethodOverride
   plug Plug.Head
   plug Plug.Session, @session_options
-  plug ExcmsRoleWeb.Router
+  plug HumoRBACWeb.Router
 end

@@ -1,8 +1,8 @@
-defmodule ExcmsRole.UsersRolesServiceTest do
-  use ExcmsRole.DataCase, async: true
+defmodule HumoRBAC.UsersRolesServiceTest do
+  use HumoRBAC.DataCase, async: true
 
-  alias ExcmsRole.UsersRolesService
-  alias ExcmsRole.UsersRolesService.User
+  alias HumoRBAC.UsersRolesService
+  alias HumoRBAC.UsersRolesService.User
   alias Humo.Authorizer.Mock
   alias Humo.Authorizer.AllAccess
   alias Humo.Authorizer.NoAccess

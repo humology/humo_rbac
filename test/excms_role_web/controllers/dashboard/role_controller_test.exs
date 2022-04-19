@@ -1,17 +1,17 @@
-defmodule ExcmsRoleWeb.Dashboard.RoleControllerTest do
-  use ExcmsRoleWeb.ConnCase, async: true
+defmodule HumoRBACWeb.Dashboard.RoleControllerTest do
+  use HumoRBACWeb.ConnCase, async: true
 
-  alias ExcmsRole.RolesService
-  alias ExcmsRole.RolesService.Role
+  alias HumoRBAC.RolesService
+  alias HumoRBAC.RolesService.Role
   alias Humo.Authorizer.{Mock, AllAccess, NoAccess}
 
   @create_attrs %{
     name: "some name",
-    resources: [%{name: "excms_role_roles", actions: ["update"]}]
+    resources: [%{name: "humo_rbac_roles", actions: ["update"]}]
   }
   @update_attrs %{
     name: "some updated name",
-    resources: [%{name: "excms_role_roles", actions: ["read", "delete"]}]
+    resources: [%{name: "humo_rbac_roles", actions: ["read", "delete"]}]
   }
   @invalid_attrs %{name: nil, resources: nil}
 
@@ -111,7 +111,7 @@ defmodule ExcmsRoleWeb.Dashboard.RoleControllerTest do
         role = RolesService.get_role!(id)
         assert "some name" = role.name
         assert %{actions: ["update"]} =
-          Enum.find(role.resources, &(&1.name == "excms_role_roles"))
+          Enum.find(role.resources, &(&1.name == "humo_rbac_roles"))
       end
       |> Mock.with_mock(can_actions: fn
         _, Role -> ["create"]
@@ -180,7 +180,7 @@ defmodule ExcmsRoleWeb.Dashboard.RoleControllerTest do
 
         assert "some updated name" = role.name
         assert %{actions: ["read", "delete"]} =
-          Enum.find(role.resources, &(&1.name == "excms_role_roles"))
+          Enum.find(role.resources, &(&1.name == "humo_rbac_roles"))
       end
       |> Mock.with_mock(can_actions: fn
         _, %Role{} -> ["update"]

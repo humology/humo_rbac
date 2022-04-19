@@ -8,13 +8,13 @@ import Config
 config :humo, Humo.Repo,
   username: "postgres",
   password: "postgres",
-  database: "excms_role_test#{System.get_env("MIX_TEST_PARTITION")}",
+  database: "humo_rbac_test#{System.get_env("MIX_TEST_PARTITION")}",
   hostname: "localhost",
   pool: Ecto.Adapters.SQL.Sandbox
 
 # We don't run a server during test. If one is required,
 # you can enable the server option below.
-config :excms_role, ExcmsRoleWeb.Endpoint,
+config :humo_rbac, HumoRBACWeb.Endpoint,
   http: [port: 4002],
   server: false
 

@@ -1,7 +1,7 @@
-defmodule ExcmsRoleWeb.AuthorizePlug do
+defmodule HumoRBACWeb.AuthorizePlug do
   import Plug.Conn
-  alias ExcmsRole.UsersRolesService
-  alias ExcmsRole.RBACAuthorization
+  alias HumoRBAC.UsersRolesService
+  alias HumoRBAC.RBACAuthorization
 
   def init(opts), do: opts
 

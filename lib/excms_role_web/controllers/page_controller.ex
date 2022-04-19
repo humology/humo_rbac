@@ -1,5 +1,5 @@
-defmodule ExcmsRoleWeb.PageController do
-  use ExcmsRoleWeb, :controller
+defmodule HumoRBACWeb.PageController do
+  use HumoRBACWeb, :controller
 
   def index(conn, _params) do
     render(conn, "index.html")

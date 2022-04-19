@@ -1,5 +1,5 @@
-defmodule ExcmsRoleWeb.LayoutViewTest do
-  use ExcmsRoleWeb.ConnCase, async: true
+defmodule HumoRBACWeb.LayoutViewTest do
+  use HumoRBACWeb.ConnCase, async: true
 
   # When testing helpers, you may want to import Phoenix.HTML and
   # use functions such as safe_to_string() to convert the helper

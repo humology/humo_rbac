@@ -1,9 +1,9 @@
-defmodule ExcmsRole.UsersRolesService.User do
+defmodule HumoRBAC.UsersRolesService.User do
   use Ecto.Schema
   import Ecto.Changeset
-  alias ExcmsRole.UsersRolesService.UserRole
-  alias ExcmsRole.RolesService.Role
-  alias ExcmsRole.RolesService
+  alias HumoRBAC.UsersRolesService.UserRole
+  alias HumoRBAC.RolesService.Role
+  alias HumoRBAC.RolesService
 
   @primary_key {:id, :binary_id, autogenerate: true}
   @derive {Inspect, only: [:id]}
@@ -35,7 +35,7 @@ defmodule ExcmsRole.UsersRolesService.User do
     use Humo.EctoResourceHelpers
 
     def name() do
-      "excms_role_users"
+      "humo_rbac_users"
     end
   end
 end

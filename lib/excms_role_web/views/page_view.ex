@@ -1,3 +1,3 @@
-defmodule ExcmsRoleWeb.PageView do
-  use ExcmsRoleWeb, :view
+defmodule HumoRBACWeb.PageView do
+  use HumoRBACWeb, :view
 end

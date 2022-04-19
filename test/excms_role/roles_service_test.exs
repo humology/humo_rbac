@@ -1,9 +1,9 @@
-defmodule ExcmsRole.RolesServiceTest do
-  use ExcmsRole.DataCase, async: true
+defmodule HumoRBAC.RolesServiceTest do
+  use HumoRBAC.DataCase, async: true
 
-  alias ExcmsRole.RolesService
-  alias ExcmsRole.RolesService.Role
-  alias ExcmsRole.RolesService.Resource
+  alias HumoRBAC.RolesService
+  alias HumoRBAC.RolesService.Role
+  alias HumoRBAC.RolesService.Resource
   alias Humo.Authorizer.Mock
   alias Humo.Authorizer.AllAccess
   alias Humo.Authorizer.NoAccess
@@ -12,7 +12,7 @@ defmodule ExcmsRole.RolesServiceTest do
   @update_attrs %{
     name: "some updated name",
     resources: [
-      %{name: "excms_role_roles", actions: ["read", "delete"]}
+      %{name: "humo_rbac_roles", actions: ["read", "delete"]}
     ]
   }
   @invalid_attrs %{name: nil, resources: nil}
@@ -81,7 +81,7 @@ defmodule ExcmsRole.RolesServiceTest do
       role = role_fixture()
       assert {:ok, %Role{} = role} = RolesService.update_role(role, @update_attrs)
       assert "some updated name" == role.name
-      assert %Resource{name: "excms_role_roles", actions: ["read", "delete"]} in role.resources
+      assert %Resource{name: "humo_rbac_roles", actions: ["read", "delete"]} in role.resources
     end
 
     test "with invalid data returns error changeset" do
