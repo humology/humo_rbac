@@ -47,8 +47,6 @@ defmodule HumoRbac.MixProject do
       {:telemetry_metrics, "~> 0.6"},
       {:telemetry_poller, "~> 1.0"},
       {:esbuild, "~> 0.3", runtime: Mix.env() == :dev},
-      {:bamboo, "~> 1.5"},
-      {:bamboo_smtp, "~> 2.1.0"},
       {:humo, git: "git@github.com:humology/humo.git"},
       {:humo_account, git: "git@github.com:humology/humo_account.git"}
     ]
