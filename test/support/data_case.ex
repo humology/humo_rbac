@@ -1,4 +1,4 @@
-defmodule HumoRBAC.DataCase do
+defmodule HumoRbac.DataCase do
   @moduledoc """
   This module defines the setup for tests requiring
   access to the application's data layer.
@@ -10,7 +10,7 @@ defmodule HumoRBAC.DataCase do
   we enable the SQL sandbox, so changes done to the database
   are reverted at the end of every test. If you are using
   PostgreSQL, you can even run database tests asynchronously
-  by setting `use HumoRBAC.DataCase, async: true`, although
+  by setting `use HumoRbac.DataCase, async: true`, although
   this option is not recommended for other databases.
   """
 
@@ -23,8 +23,8 @@ defmodule HumoRBAC.DataCase do
       import Ecto
       import Ecto.Changeset
       import Ecto.Query
-      import HumoRBAC.DataCase
-      import HumoRBAC.Factory
+      import HumoRbac.DataCase
+      import HumoRbac.Factory
     end
   end
 

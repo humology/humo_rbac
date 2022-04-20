@@ -1,10 +1,10 @@
-defmodule HumoRBACWeb.Dashboard.UserRoleController do
-  use HumoRBACWeb, :controller
+defmodule HumoRbacWeb.Dashboard.UserRoleController do
+  use HumoRbacWeb, :controller
 
-  alias HumoRBAC.UsersRolesService
-  alias HumoRBAC.UsersRolesService.User
-  alias HumoRBAC.RolesService
-  alias HumoRBAC.RolesService.Role
+  alias HumoRbac.UsersRolesService
+  alias HumoRbac.UsersRolesService.User
+  alias HumoRbac.RolesService
+  alias HumoRbac.RolesService.Role
   alias HumoWeb.AuthorizationExtractor
   import HumoWeb, only: [routes: 0]
 

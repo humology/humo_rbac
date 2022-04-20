@@ -1,4 +1,4 @@
-defmodule HumoRBAC.MixProject do
+defmodule HumoRbac.MixProject do
   use Mix.Project
 
   def project do
@@ -20,7 +20,7 @@ defmodule HumoRBAC.MixProject do
   # Type `mix help compile.app` for more information.
   def application do
     [
-      mod: {HumoRBAC.Application, []},
+      mod: {HumoRbac.Application, []},
       extra_applications: [:logger, :runtime_tools]
     ]
   end

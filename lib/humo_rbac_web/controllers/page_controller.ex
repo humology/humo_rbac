@@ -1,5 +1,5 @@
-defmodule HumoRBACWeb.PageController do
-  use HumoRBACWeb, :controller
+defmodule HumoRbacWeb.PageController do
+  use HumoRbacWeb, :controller
 
   def index(conn, _params) do
     render(conn, "index.html")

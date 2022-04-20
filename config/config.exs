@@ -11,11 +11,11 @@ if Path.expand("#{Mix.env()}_deps.exs", __DIR__) |> File.exists?(), do:
   import_config "#{Mix.env()}_deps.exs"
 
 # Configures the endpoint
-config :humo_rbac, HumoRBACWeb.Endpoint,
+config :humo_rbac, HumoRbacWeb.Endpoint,
   url: [host: "localhost"],
   secret_key_base: "jgcynEhO5benFFnqSS5I/tDf+62XJF3/h15CfA+N1Olg2h9n9TFZ1yiwLlWcsOwR",
-  render_errors: [view: HumoRBACWeb.ErrorView, accepts: ~w(html json), layout: false],
-  pubsub_server: HumoRBAC.PubSub,
+  render_errors: [view: HumoRbacWeb.ErrorView, accepts: ~w(html json), layout: false],
+  pubsub_server: HumoRbac.PubSub,
   live_view: [signing_salt: "dEhMVmz4"]
 
 # Configure esbuild (the version is required)

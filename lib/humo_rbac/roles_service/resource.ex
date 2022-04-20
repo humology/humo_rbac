@@ -1,4 +1,4 @@
-defmodule HumoRBAC.RolesService.Resource do
+defmodule HumoRbac.RolesService.Resource do
   use Ecto.Schema
   import Ecto.Changeset
 

@@ -15,15 +15,15 @@ config :humo, :plugins,
 
 config :humo, HumoWeb.PluginsRouter,
   humo_rbac: %{
-    dashboard_routers: [HumoRBACWeb.Routers.Dashboard]
+    dashboard_routers: [HumoRbacWeb.Routers.Dashboard]
   }
 
 config :humo, HumoWeb.BrowserPlugs,
   humo: [{HumoWeb.SetAdministratorPlug, false}],
-  humo_rbac: [{HumoRBACWeb.AuthorizePlug, true}]
+  humo_rbac: [{HumoRbacWeb.AuthorizePlug, true}]
 
 config :humo, Humo.Warehouse,
   humo_rbac: [
-    HumoRBAC.RolesService.Role,
-    HumoRBAC.UsersRolesService.User
+    HumoRbac.RolesService.Role,
+    HumoRbac.UsersRolesService.User
   ]

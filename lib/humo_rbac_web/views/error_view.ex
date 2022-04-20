@@ -1,5 +1,5 @@
-defmodule HumoRBACWeb.ErrorView do
-  use HumoRBACWeb, :view
+defmodule HumoRbacWeb.ErrorView do
+  use HumoRbacWeb, :view
 
   # If you want to customize a particular status code
   # for a certain format, you may uncomment below.

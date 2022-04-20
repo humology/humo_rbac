@@ -1,3 +1,3 @@
-defmodule HumoRBACWeb.LayoutView do
-  use HumoRBACWeb, :view
+defmodule HumoRbacWeb.LayoutView do
+  use HumoRbacWeb, :view
 end

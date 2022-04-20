@@ -1,5 +1,5 @@
-defmodule HumoRBACWeb.Router do
-  use HumoRBACWeb, :router
+defmodule HumoRbacWeb.Router do
+  use HumoRbacWeb, :router
 
   pipeline :browser do
     plug :accepts, ["html"]
@@ -15,7 +15,7 @@ defmodule HumoRBACWeb.Router do
     plug :accepts, ["json"]
   end
 
-  scope "/", HumoRBACWeb do
+  scope "/", HumoRbacWeb do
     pipe_through :browser
 
     get "/", PageController, :index
@@ -24,7 +24,7 @@ defmodule HumoRBACWeb.Router do
   use HumoWeb.PluginsRouter, otp_app: :humo_rbac
 
   # Other scopes may use custom stacks.
-  # scope "/api", HumoRBACWeb do
+  # scope "/api", HumoRbacWeb do
   #   pipe_through :api
   # end
 
@@ -40,7 +40,7 @@ defmodule HumoRBACWeb.Router do
 
     scope "/" do
       pipe_through :browser
-      live_dashboard "/dashboard", metrics: HumoRBACWeb.Telemetry
+      live_dashboard "/dashboard", metrics: HumoRbacWeb.Telemetry
     end
   end
 end

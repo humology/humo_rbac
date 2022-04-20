@@ -1,12 +1,12 @@
-defmodule HumoRBACWeb do
+defmodule HumoRbacWeb do
   @moduledoc """
   The entrypoint for defining your web interface, such
   as controllers, views, channels and so on.
 
   This can be used in your application as:
 
-      use HumoRBACWeb, :controller
-      use HumoRBACWeb, :view
+      use HumoRbacWeb, :controller
+      use HumoRbacWeb, :view
 
   The definitions below will be executed for every view,
   controller, etc, so keep them short and clean, focused
@@ -19,10 +19,10 @@ defmodule HumoRBACWeb do
 
   def controller do
     quote do
-      use Phoenix.Controller, namespace: HumoRBACWeb
+      use Phoenix.Controller, namespace: HumoRbacWeb
 
       import Plug.Conn
-      import HumoRBACWeb.Gettext
+      import HumoRbacWeb.Gettext
     end
   end
 
@@ -30,7 +30,7 @@ defmodule HumoRBACWeb do
     quote do
       use Phoenix.View,
         root: "lib/humo_rbac_web/templates",
-        namespace: HumoRBACWeb
+        namespace: HumoRbacWeb
 
       # Import convenience functions from controllers
       import Phoenix.Controller,
@@ -53,7 +53,7 @@ defmodule HumoRBACWeb do
   def channel do
     quote do
       use Phoenix.Channel
-      import HumoRBACWeb.Gettext
+      import HumoRbacWeb.Gettext
     end
   end
 
@@ -65,8 +65,8 @@ defmodule HumoRBACWeb do
       # Import basic rendering functionality (render, render_layout, etc)
       import Phoenix.View
 
-      import HumoRBACWeb.ErrorHelpers
-      import HumoRBACWeb.Gettext
+      import HumoRbacWeb.ErrorHelpers
+      import HumoRbacWeb.Gettext
       import HumoWeb, only: [routes: 0]
       import HumoWeb.RouteAuthorizer
       import HumoWeb.AuthorizeViewHelpers

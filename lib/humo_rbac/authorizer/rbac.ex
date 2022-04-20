@@ -1,7 +1,7 @@
-defmodule HumoRBAC.Authorizer.RBAC do
+defmodule HumoRbac.Authorizer.RBAC do
   use Humo.Authorizer.Behaviour
   alias Humo.Repo
-  alias HumoRBAC.RBACAuthorization
+  alias HumoRbac.RBACAuthorization
   alias Humo.Warehouse
 
   @moduledoc """

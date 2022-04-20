@@ -1,4 +1,4 @@
-defmodule HumoRBAC.RBACAuthorization do
+defmodule HumoRbac.RBACAuthorization do
   defstruct is_administrator: false,
             authorized_resource_actions: %{}
 

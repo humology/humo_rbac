@@ -1,8 +1,8 @@
-defmodule HumoRBAC.RolesService.Role do
+defmodule HumoRbac.RolesService.Role do
   use Ecto.Schema
   import Ecto.Changeset
   alias Humo.Warehouse
-  alias HumoRBAC.RolesService.Resource
+  alias HumoRbac.RolesService.Resource
 
   schema "humo_rbac_roles" do
     field :name, :string

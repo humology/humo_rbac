@@ -14,7 +14,7 @@ config :humo, Humo.Repo,
 
 # We don't run a server during test. If one is required,
 # you can enable the server option below.
-config :humo_rbac, HumoRBACWeb.Endpoint,
+config :humo_rbac, HumoRbacWeb.Endpoint,
   http: [port: 4002],
   server: false
 

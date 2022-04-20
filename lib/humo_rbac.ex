@@ -1,6 +1,6 @@
-defmodule HumoRBAC do
+defmodule HumoRbac do
   @moduledoc """
-  HumoRBAC keeps the contexts that define your domain
+  HumoRbac keeps the contexts that define your domain
   and business logic.
 
   Contexts are also responsible for managing your data, regardless

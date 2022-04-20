@@ -1,4 +1,4 @@
-defmodule HumoRBACWeb.Endpoint do
+defmodule HumoRbacWeb.Endpoint do
   use Phoenix.Endpoint, otp_app: :humo_rbac
 
   # The session will be stored in the cookie and signed,
@@ -10,7 +10,7 @@ defmodule HumoRBACWeb.Endpoint do
     signing_salt: "9gvidbAL"
   ]
 
-  socket "/socket", HumoRBACWeb.UserSocket,
+  socket "/socket", HumoRbacWeb.UserSocket,
     websocket: true,
     longpoll: false
 
@@ -50,5 +50,5 @@ defmodule HumoRBACWeb.Endpoint do
   plug Plug.MethodOverride
   plug Plug.Head
   plug Plug.Session, @session_options
-  plug HumoRBACWeb.Router
+  plug HumoRbacWeb.Router
 end

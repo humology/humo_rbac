@@ -1,4 +1,4 @@
-defmodule HumoRBAC.Application do
+defmodule HumoRbac.Application do
   # See https://hexdocs.pm/elixir/Application.html
   # for more information on OTP Applications
   @moduledoc false
@@ -8,18 +8,18 @@ defmodule HumoRBAC.Application do
   @impl true
   def start(_type, _args) do
     children = [
-      # Start a worker by calling: HumoRBAC.Worker.start_link(arg)
-      # {HumoRBAC.Worker, arg}
+      # Start a worker by calling: HumoRbac.Worker.start_link(arg)
+      # {HumoRbac.Worker, arg}
     ]
 
     children = if Humo.is_server_app_module(__MODULE__) do
       children ++ [
         # Start the PubSub system
-        {Phoenix.PubSub, name: HumoRBAC.PubSub},
+        {Phoenix.PubSub, name: HumoRbac.PubSub},
         # Start the Telemetry supervisor
-        HumoRBACWeb.Telemetry,
+        HumoRbacWeb.Telemetry,
         # Start the Endpoint (http/https)
-        HumoRBACWeb.Endpoint
+        HumoRbacWeb.Endpoint
       ]
     else
       children
@@ -27,7 +27,7 @@ defmodule HumoRBAC.Application do
 
     # See https://hexdocs.pm/elixir/Supervisor.html
     # for other strategies and supported options
-    opts = [strategy: :one_for_one, name: HumoRBAC.Supervisor]
+    opts = [strategy: :one_for_one, name: HumoRbac.Supervisor]
     Supervisor.start_link(children, opts)
   end
 
@@ -35,7 +35,7 @@ defmodule HumoRBAC.Application do
   # whenever the application is updated.
   @impl true
   def config_change(changed, _new, removed) do
-    HumoRBACWeb.Endpoint.config_change(changed, removed)
+    HumoRbacWeb.Endpoint.config_change(changed, removed)
     :ok
   end
 end

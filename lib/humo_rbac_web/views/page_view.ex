@@ -1,3 +1,3 @@
-defmodule HumoRBACWeb.PageView do
-  use HumoRBACWeb, :view
+defmodule HumoRbacWeb.PageView do
+  use HumoRbacWeb, :view
 end

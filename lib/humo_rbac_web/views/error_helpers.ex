@@ -1,4 +1,4 @@
-defmodule HumoRBACWeb.ErrorHelpers do
+defmodule HumoRbacWeb.ErrorHelpers do
   @moduledoc """
   Conveniences for translating and building error messages.
   """
@@ -39,9 +39,9 @@ defmodule HumoRBACWeb.ErrorHelpers do
     # should be written to the errors.po file. The :count option is
     # set by Ecto and indicates we should also apply plural rules.
     if count = opts[:count] do
-      Gettext.dngettext(HumoRBACWeb.Gettext, "errors", msg, msg, count, opts)
+      Gettext.dngettext(HumoRbacWeb.Gettext, "errors", msg, msg, count, opts)
     else
-      Gettext.dgettext(HumoRBACWeb.Gettext, "errors", msg, opts)
+      Gettext.dgettext(HumoRbacWeb.Gettext, "errors", msg, opts)
     end
   end
 end

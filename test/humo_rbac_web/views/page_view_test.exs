@@ -1,3 +1,3 @@
-defmodule HumoRBACWeb.PageViewTest do
-  use HumoRBACWeb.ConnCase, async: true
+defmodule HumoRbacWeb.PageViewTest do
+  use HumoRbacWeb.ConnCase, async: true
 end

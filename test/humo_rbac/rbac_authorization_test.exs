@@ -1,9 +1,9 @@
-defmodule HumoRBAC.RBACAuthorizationTest do
-  use HumoRBAC.DataCase
+defmodule HumoRbac.RBACAuthorizationTest do
+  use HumoRbac.DataCase
 
-  alias HumoRBAC.RBACAuthorization
-  alias HumoRBAC.RolesService.Role
-  alias HumoRBAC.RolesService.Resource
+  alias HumoRbac.RBACAuthorization
+  alias HumoRbac.RolesService.Role
+  alias HumoRbac.RolesService.Resource
 
   describe "from_roles/1" do
     test "when roles is empty list, no permission" do

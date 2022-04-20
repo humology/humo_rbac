@@ -1,5 +1,5 @@
-defmodule HumoRBACWeb.PageControllerTest do
-  use HumoRBACWeb.ConnCase
+defmodule HumoRbacWeb.PageControllerTest do
+  use HumoRbacWeb.ConnCase
 
   test "GET /", %{conn: conn} do
     conn = get(conn, "/")

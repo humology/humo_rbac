@@ -1,4 +1,4 @@
-defmodule HumoRBACWeb.ConnCase do
+defmodule HumoRbacWeb.ConnCase do
   @moduledoc """
   This module defines the test case to be used by
   tests that require setting up a connection.
@@ -11,7 +11,7 @@ defmodule HumoRBACWeb.ConnCase do
   we enable the SQL sandbox, so changes done to the database
   are reverted at the end of every test. If you are using
   PostgreSQL, you can even run database tests asynchronously
-  by setting `use HumoRBACWeb.ConnCase, async: true`, although
+  by setting `use HumoRbacWeb.ConnCase, async: true`, although
   this option is not recommended for other databases.
   """
 
@@ -22,13 +22,13 @@ defmodule HumoRBACWeb.ConnCase do
       # Import conveniences for testing with connections
       import Plug.Conn
       import Phoenix.ConnTest
-      import HumoRBACWeb.ConnCase
+      import HumoRbacWeb.ConnCase
 
       import HumoWeb, only: [routes: 0]
-      import HumoRBAC.Factory
+      import HumoRbac.Factory
 
       # The default endpoint for testing
-      @endpoint HumoRBACWeb.Endpoint
+      @endpoint HumoRbacWeb.Endpoint
     end
   end
 

@@ -1,8 +1,8 @@
-defmodule HumoRBACWeb.Dashboard.RoleControllerTest do
-  use HumoRBACWeb.ConnCase, async: true
+defmodule HumoRbacWeb.Dashboard.RoleControllerTest do
+  use HumoRbacWeb.ConnCase, async: true
 
-  alias HumoRBAC.RolesService
-  alias HumoRBAC.RolesService.Role
+  alias HumoRbac.RolesService
+  alias HumoRbac.RolesService.Role
   alias Humo.Authorizer.{Mock, AllAccess, NoAccess}
 
   @create_attrs %{
