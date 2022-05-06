@@ -22,7 +22,7 @@ defmodule HumoRbacWeb.Dashboard.RoleControllerTest do
       for resource_can_actions <- [[], ["read"], ["update"], ["delete"], ["read", "update", "delete"]],
           resource_module_can_actions <- [[], ["create"]] do
         fn ->
-          conn = get(conn, routes().dashboard_role_path(conn, :index))
+          conn = get(conn, routes().dashboard_humo_rbac_role_path(conn, :index))
 
           response = html_response(conn, 200)
           assert response =~ "<h3>Roles</h3>"
@@ -46,7 +46,7 @@ defmodule HumoRbacWeb.Dashboard.RoleControllerTest do
 
     test "when list of record is empty, renders no role", %{conn: conn} do
       fn ->
-        conn = get(conn, routes().dashboard_role_path(conn, :index))
+        conn = get(conn, routes().dashboard_humo_rbac_role_path(conn, :index))
 
         response = html_response(conn, 200)
         assert response =~ "<h3>Roles</h3>"
@@ -64,7 +64,7 @@ defmodule HumoRbacWeb.Dashboard.RoleControllerTest do
 
     test "no access", %{conn: conn} do
       fn ->
-        conn = get(conn, routes().dashboard_role_path(conn, :index))
+        conn = get(conn, routes().dashboard_humo_rbac_role_path(conn, :index))
 
         assert response(conn, 403) =~ "Forbidden"
       end
@@ -76,7 +76,7 @@ defmodule HumoRbacWeb.Dashboard.RoleControllerTest do
     test "renders edit form with allowed links", %{conn: conn} do
       for list_module_can_actions <- [["read"], []] do
         fn ->
-          conn = get(conn, routes().dashboard_role_path(conn, :new))
+          conn = get(conn, routes().dashboard_humo_rbac_role_path(conn, :new))
 
           response = html_response(conn, 200)
           assert response =~ "New Role"
@@ -92,7 +92,7 @@ defmodule HumoRbacWeb.Dashboard.RoleControllerTest do
 
     test "no access", %{conn: conn} do
       fn ->
-        conn = get(conn, routes().dashboard_role_path(conn, :new))
+        conn = get(conn, routes().dashboard_humo_rbac_role_path(conn, :new))
 
         assert response(conn, 403) =~ "Forbidden"
       end
@@ -103,10 +103,10 @@ defmodule HumoRbacWeb.Dashboard.RoleControllerTest do
   describe "create role" do
     test "redirects when data is valid", %{conn: conn} do
       fn ->
-        conn = post(conn, routes().dashboard_role_path(conn, :create), role: @create_attrs)
+        conn = post(conn, routes().dashboard_humo_rbac_role_path(conn, :create), role: @create_attrs)
 
         assert %{id: id} = redirected_params(conn)
-        assert redirected_to(conn) == routes().dashboard_role_path(conn, :show, id)
+        assert redirected_to(conn) == routes().dashboard_humo_rbac_role_path(conn, :show, id)
 
         role = RolesService.get_role!(id)
         assert "some name" = role.name
@@ -121,7 +121,7 @@ defmodule HumoRbacWeb.Dashboard.RoleControllerTest do
 
     test "renders errors when data is invalid", %{conn: conn} do
       fn ->
-        conn = post(conn, routes().dashboard_role_path(conn, :create), role: @invalid_attrs)
+        conn = post(conn, routes().dashboard_humo_rbac_role_path(conn, :create), role: @invalid_attrs)
 
         assert html_response(conn, 200) =~ "New Role"
       end
@@ -130,7 +130,7 @@ defmodule HumoRbacWeb.Dashboard.RoleControllerTest do
 
     test "no access", %{conn: conn} do
       fn ->
-        conn = post(conn, routes().dashboard_role_path(conn, :create), role: @create_attrs)
+        conn = post(conn, routes().dashboard_humo_rbac_role_path(conn, :create), role: @create_attrs)
         assert response(conn, 403) =~ "Forbidden"
       end
       |> Mock.with_mock(can_actions: &NoAccess.can_actions/2)
@@ -143,7 +143,7 @@ defmodule HumoRbacWeb.Dashboard.RoleControllerTest do
     test "renders edit form with allowed links", %{conn: conn, role: role} do
       for list_module_can_actions <- [["read"], []] do
         fn ->
-          conn = get(conn, routes().dashboard_role_path(conn, :edit, role))
+          conn = get(conn, routes().dashboard_humo_rbac_role_path(conn, :edit, role))
 
           response = html_response(conn, 200)
           assert response =~ "Edit Role"
@@ -159,7 +159,7 @@ defmodule HumoRbacWeb.Dashboard.RoleControllerTest do
 
     test "no access", %{conn: conn, role: role} do
       fn ->
-        conn = get(conn, routes().dashboard_role_path(conn, :edit, role))
+        conn = get(conn, routes().dashboard_humo_rbac_role_path(conn, :edit, role))
 
         assert response(conn, 403) =~ "Forbidden"
       end
@@ -172,9 +172,9 @@ defmodule HumoRbacWeb.Dashboard.RoleControllerTest do
 
     test "redirects when data is valid", %{conn: conn, role: role} do
       fn ->
-        conn = put(conn, routes().dashboard_role_path(conn, :update, role), role: @update_attrs)
+        conn = put(conn, routes().dashboard_humo_rbac_role_path(conn, :update, role), role: @update_attrs)
 
-        assert redirected_to(conn) == routes().dashboard_role_path(conn, :show, role)
+        assert redirected_to(conn) == routes().dashboard_humo_rbac_role_path(conn, :show, role)
 
         role = RolesService.get_role!(role.id)
 
@@ -190,7 +190,7 @@ defmodule HumoRbacWeb.Dashboard.RoleControllerTest do
 
     test "renders errors when data is invalid", %{conn: conn, role: role} do
       fn ->
-        conn = put(conn, routes().dashboard_role_path(conn, :update, role), role: @invalid_attrs)
+        conn = put(conn, routes().dashboard_humo_rbac_role_path(conn, :update, role), role: @invalid_attrs)
 
         assert html_response(conn, 200) =~ "Edit Role"
       end
@@ -199,7 +199,7 @@ defmodule HumoRbacWeb.Dashboard.RoleControllerTest do
 
     test "no access", %{conn: conn, role: role} do
       fn ->
-        conn = put(conn, routes().dashboard_role_path(conn, :update, role), role: @update_attrs)
+        conn = put(conn, routes().dashboard_humo_rbac_role_path(conn, :update, role), role: @update_attrs)
 
         assert response(conn, 403) =~ "Forbidden"
       end
@@ -214,7 +214,7 @@ defmodule HumoRbacWeb.Dashboard.RoleControllerTest do
       for record_can_actions <- [["read", "update"], ["read"]],
           list_module_can_actions <- [["read"], []] do
         fn ->
-          conn = get(conn, routes().dashboard_role_path(conn, :show, role))
+          conn = get(conn, routes().dashboard_humo_rbac_role_path(conn, :show, role))
           assert (html_response(conn, 200) =~ "Edit") == ("update" in record_can_actions)
           assert (html_response(conn, 200) =~ "Back") == ("read" in list_module_can_actions)
         end
@@ -228,7 +228,7 @@ defmodule HumoRbacWeb.Dashboard.RoleControllerTest do
 
     test "no access", %{conn: conn, role: role} do
       fn ->
-        conn = get(conn, routes().dashboard_role_path(conn, :show, role))
+        conn = get(conn, routes().dashboard_humo_rbac_role_path(conn, :show, role))
         assert response(conn, 403) =~ "Forbidden"
       end
       |> Mock.with_mock(can_actions: &NoAccess.can_actions/2)
@@ -240,11 +240,11 @@ defmodule HumoRbacWeb.Dashboard.RoleControllerTest do
 
     test "deletes chosen role", %{conn: conn, role: role} do
       fn ->
-        conn = delete(conn, routes().dashboard_role_path(conn, :delete, role))
-        assert redirected_to(conn) == routes().dashboard_role_path(conn, :index)
+        conn = delete(conn, routes().dashboard_humo_rbac_role_path(conn, :delete, role))
+        assert redirected_to(conn) == routes().dashboard_humo_rbac_role_path(conn, :index)
 
         assert_error_sent 404, fn ->
-          get(conn, routes().dashboard_role_path(conn, :show, role))
+          get(conn, routes().dashboard_humo_rbac_role_path(conn, :show, role))
         end
       end
       |> Mock.with_mock(can_actions: fn _, %Role{} -> ["delete"] end)
@@ -252,7 +252,7 @@ defmodule HumoRbacWeb.Dashboard.RoleControllerTest do
 
     test "no access", %{conn: conn, role: role} do
       fn ->
-        conn = delete(conn, routes().dashboard_role_path(conn, :delete, role))
+        conn = delete(conn, routes().dashboard_humo_rbac_role_path(conn, :delete, role))
         assert response(conn, 403) =~ "Forbidden"
       end
       |> Mock.with_mock(can_actions: &NoAccess.can_actions/2)

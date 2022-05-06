@@ -1,5 +1,5 @@
 <h3>New Role</h3>
 
-<%= render "form.html", Map.put(assigns, :action, routes().dashboard_role_path(@conn, :create)) %>
+<%= render "form.html", Map.put(assigns, :action, routes().dashboard_humo_rbac_role_path(@conn, :create)) %>
 
-<%= can_link @conn, "Back", to: routes().dashboard_role_path(@conn, :index) %>
+<%= can_link @conn, "Back", to: routes().dashboard_humo_rbac_role_path(@conn, :index) %>

@@ -22,6 +22,6 @@
 <% end %>
 
 <%= can_link Plug.Conn.assign(@conn, :role, @role), "Edit",
-             to: routes().dashboard_role_path(@conn, :edit, @role),
+             to: routes().dashboard_humo_rbac_role_path(@conn, :edit, @role),
              class: "mr-1" %>
-<%= can_link @conn, "Back", to: routes().dashboard_role_path(@conn, :index) %>
+<%= can_link @conn, "Back", to: routes().dashboard_humo_rbac_role_path(@conn, :index) %>

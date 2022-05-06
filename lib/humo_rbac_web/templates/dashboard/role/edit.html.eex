@@ -1,5 +1,5 @@
 <h3 class="mt-5">Edit Role</h3>
 
-<%= render "form.html", Map.put(assigns, :action, routes().dashboard_role_path(@conn, :update, @role)) %>
+<%= render "form.html", Map.put(assigns, :action, routes().dashboard_humo_rbac_role_path(@conn, :update, @role)) %>
 
-<%= can_link @conn, "Back", to: routes().dashboard_role_path(@conn, :index) %>
+<%= can_link @conn, "Back", to: routes().dashboard_humo_rbac_role_path(@conn, :index) %>

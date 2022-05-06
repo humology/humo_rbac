@@ -17,7 +17,7 @@ defmodule HumoRbacWeb.Dashboard.UserRoleControllerTest do
     test "render allowed links", %{conn: conn, user: user} do
       for resource_can_actions <- [[], ["read"], ["update"], ["read", "update"]] do
         fn ->
-          conn = get(conn, routes().dashboard_user_role_path(conn, :index))
+          conn = get(conn, routes().dashboard_humo_rbac_user_role_path(conn, :index))
 
           response = html_response(conn, 200)
           assert response =~ "<h3>Users roles</h3>"
@@ -40,7 +40,7 @@ defmodule HumoRbacWeb.Dashboard.UserRoleControllerTest do
 
     test "when list of record is empty, renders no user", %{conn: conn, user: user} do
       fn ->
-        conn = get(conn, routes().dashboard_user_role_path(conn, :index))
+        conn = get(conn, routes().dashboard_humo_rbac_user_role_path(conn, :index))
 
         response = html_response(conn, 200)
         assert response =~ "<h3>Users roles</h3>"
@@ -58,7 +58,7 @@ defmodule HumoRbacWeb.Dashboard.UserRoleControllerTest do
 
     test "no access", %{conn: conn} do
       fn ->
-        conn = get(conn, routes().dashboard_user_role_path(conn, :index))
+        conn = get(conn, routes().dashboard_humo_rbac_user_role_path(conn, :index))
 
         assert response(conn, 403) =~ "Forbidden"
       end
@@ -71,7 +71,7 @@ defmodule HumoRbacWeb.Dashboard.UserRoleControllerTest do
       for record_can_actions <- [["read", "update"], ["read"]],
           list_module_can_actions <- [["read"], []] do
         fn ->
-          conn = get(conn, routes().dashboard_user_role_path(conn, :show, user))
+          conn = get(conn, routes().dashboard_humo_rbac_user_role_path(conn, :show, user))
 
           response = html_response(conn, 200)
           assert (response =~ "Edit") == ("update" in record_can_actions)
@@ -88,7 +88,7 @@ defmodule HumoRbacWeb.Dashboard.UserRoleControllerTest do
 
     test "no access", %{conn: conn, user: user} do
       fn ->
-        conn = get(conn, routes().dashboard_user_role_path(conn, :show, user))
+        conn = get(conn, routes().dashboard_humo_rbac_user_role_path(conn, :show, user))
 
         assert response(conn, 403) =~ "Forbidden"
       end
@@ -100,7 +100,7 @@ defmodule HumoRbacWeb.Dashboard.UserRoleControllerTest do
     test "renders user edit form with allowed links", %{conn: conn, user: user} do
       for list_module_can_actions <- [["read"], []] do
         fn ->
-          conn = get(conn, routes().dashboard_user_role_path(conn, :edit, user))
+          conn = get(conn, routes().dashboard_humo_rbac_user_role_path(conn, :edit, user))
 
           response = html_response(conn, 200)
           assert response =~ "<h3>Edit User roles</h3>"
@@ -120,7 +120,7 @@ defmodule HumoRbacWeb.Dashboard.UserRoleControllerTest do
 
     test "no access", %{conn: conn, user: user} do
       fn ->
-        conn = get(conn, routes().dashboard_user_role_path(conn, :edit, user))
+        conn = get(conn, routes().dashboard_humo_rbac_user_role_path(conn, :edit, user))
         assert response(conn, 403) =~ "Forbidden"
       end
       |> Mock.with_mock(can_actions: &NoAccess.can_actions/2)
@@ -130,8 +130,8 @@ defmodule HumoRbacWeb.Dashboard.UserRoleControllerTest do
   describe "update user roles" do
     test "redirects when data is valid", %{conn: conn, user: user, role: role} do
       fn ->
-        conn = put(conn, routes().dashboard_user_role_path(conn, :update, user), user: %{roles: [role.id]})
-        assert redirected_to(conn) == routes().dashboard_user_role_path(conn, :show, user)
+        conn = put(conn, routes().dashboard_humo_rbac_user_role_path(conn, :update, user), user: %{roles: [role.id]})
+        assert redirected_to(conn) == routes().dashboard_humo_rbac_user_role_path(conn, :show, user)
 
         user = UsersRolesService.get_user!(user.id)
         assert [role] == user.roles
@@ -144,7 +144,7 @@ defmodule HumoRbacWeb.Dashboard.UserRoleControllerTest do
 
     test "no access", %{conn: conn, user: user, role: role} do
       fn ->
-        conn = put(conn, routes().dashboard_user_role_path(conn, :update, user), user: %{roles: [role.id]})
+        conn = put(conn, routes().dashboard_humo_rbac_user_role_path(conn, :update, user), user: %{roles: [role.id]})
         assert response(conn, 403) =~ "Forbidden"
       end
       |> Mock.with_mock(can_actions: &NoAccess.can_actions/2)

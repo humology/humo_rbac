@@ -30,7 +30,7 @@ defmodule HumoRbacWeb.Dashboard.RoleController do
       {:ok, role} ->
         conn
         |> put_flash(:info, "Role created successfully.")
-        |> redirect(to: routes().dashboard_role_path(conn, :show, role))
+        |> redirect(to: routes().dashboard_humo_rbac_role_path(conn, :show, role))
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "new.html", changeset: changeset)
@@ -55,7 +55,7 @@ defmodule HumoRbacWeb.Dashboard.RoleController do
       {:ok, role} ->
         conn
         |> put_flash(:info, "Role updated successfully.")
-        |> redirect(to: routes().dashboard_role_path(conn, :show, role))
+        |> redirect(to: routes().dashboard_humo_rbac_role_path(conn, :show, role))
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "edit.html", role: role, changeset: changeset)
@@ -68,7 +68,7 @@ defmodule HumoRbacWeb.Dashboard.RoleController do
 
     conn
     |> put_flash(:info, "Role deleted successfully.")
-    |> redirect(to: routes().dashboard_role_path(conn, :index))
+    |> redirect(to: routes().dashboard_humo_rbac_role_path(conn, :index))
   end
 
   defp load_resources(conn, _params) do
