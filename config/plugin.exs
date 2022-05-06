@@ -14,9 +14,7 @@ config :humo, :plugins,
   }
 
 config :humo, HumoWeb.PluginsRouter,
-  humo_rbac: %{
-    dashboard_routers: [HumoRbacWeb.Routers.Dashboard]
-  }
+  humo_rbac: HumoRbacWeb.PluginRouter
 
 config :humo, HumoWeb.BrowserPlugs,
   humo: [{HumoWeb.SetAdministratorPlug, false}],

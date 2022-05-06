@@ -63,6 +63,9 @@ config :humo_rbac, HumoRbacWeb.Endpoint,
 config :humo, Humo,
   assets_watcher: true
 
+config :humo, Humo.Authorizer,
+  authorizer: Humo.Authorizer.AllAccess
+
 # Do not include metadata nor timestamps in development logs
 config :logger, :console, format: "[$level] $message\n"
 
@@ -72,6 +75,3 @@ config :phoenix, :stacktrace_depth, 20
 
 # Initialize plugs at runtime for faster development compilation
 config :phoenix, :plug_init_mode, :runtime
-
-config :humo, Humo.Authorizer,
-  authorizer: Humo.Authorizer.AllAccess
