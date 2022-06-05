@@ -13,14 +13,13 @@ if Path.expand("humo_#{Mix.env()}.exs", __DIR__) |> File.exists?(), do:
 # Configures the endpoint
 config :humo_rbac, HumoRbacWeb.Endpoint,
   url: [host: "localhost"],
-  secret_key_base: "jgcynEhO5benFFnqSS5I/tDf+62XJF3/h15CfA+N1Olg2h9n9TFZ1yiwLlWcsOwR",
   render_errors: [view: HumoRbacWeb.ErrorView, accepts: ~w(html json), layout: false],
   pubsub_server: HumoRbac.PubSub,
   live_view: [signing_salt: "dEhMVmz4"]
 
 # Configure esbuild (the version is required)
 config :esbuild,
-  version: "0.14.0",
+  version: "0.14.29",
   default: [
     args:
       ~w(js/app.js --bundle --target=es2017 --outdir=../priv/static/assets --external:/fonts/* --external:/images/*),

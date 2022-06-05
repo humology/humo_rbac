@@ -7,12 +7,9 @@ defmodule HumoRbacWeb.Endpoint do
   @session_options [
     store: :cookie,
     key: "_humo_rbac_key",
-    signing_salt: "9gvidbAL"
+    signing_salt: "9gvidbAL",
+    same_site: "Lax"
   ]
-
-  socket "/socket", HumoRbacWeb.UserSocket,
-    websocket: true,
-    longpoll: false
 
   socket "/live", Phoenix.LiveView.Socket, websocket: [connect_info: [session: @session_options]]
 

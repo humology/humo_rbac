@@ -1,17 +1,29 @@
 defmodule HumoRbac.MixProject do
   use Mix.Project
 
+  @scm_url "https://github.com/humology/humo_rbac"
+
   def project do
     [
       app: :humo_rbac,
       version: "0.1.0",
-      elixir: "~> 1.7",
+      elixir: "~> 1.12",
       elixirc_paths: elixirc_paths(Mix.env()),
-      compilers: [:phoenix, :gettext] ++ Mix.compilers(),
+      compilers: [:gettext] ++ Mix.compilers(),
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
       deps: deps(),
-      humo_plugin: true
+      package: [
+        maintainers: ["Kamil Shersheyev"],
+        licenses: ["Apache-2.0"],
+        links: %{"GitHub" => @scm_url},
+        files: ~w(assets config/plugin.exs lib priv mix.exs package.json LICENSE README.md .formatter.exs)
+      ],
+      source_url: @scm_url,
+      humo_plugin: true,
+      description: """
+      Humo RBAC plugin based on Humo framework.
+      """
     ]
   end
 
@@ -34,21 +46,25 @@ defmodule HumoRbac.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
-      {:phoenix, "~> 1.6.2"},
+      {:phoenix, "~> 1.6.9"},
       {:phoenix_ecto, "~> 4.4"},
       {:ecto_sql, "~> 3.6"},
       {:postgrex, ">= 0.0.0"},
       {:phoenix_html, "~> 3.0"},
+      {:phoenix_live_reload, "~> 1.2", only: :dev},
+      {:phoenix_live_view, "~> 0.17.5"},
+      {:floki, ">= 0.30.0", only: :test},
+      {:phoenix_live_dashboard, "~> 0.6"},
+      {:esbuild, "~> 0.4", runtime: Mix.env() == :dev},
+      {:telemetry_metrics, "~> 0.6"},
+      {:telemetry_poller, "~> 1.0"},
       {:gettext, "~> 0.18"},
       {:jason, "~> 1.2"},
       {:plug_cowboy, "~> 2.5"},
-      {:phoenix_live_reload, "~> 1.2", only: :dev},
-      {:phoenix_live_dashboard, "~> 0.6"},
-      {:telemetry_metrics, "~> 0.6"},
-      {:telemetry_poller, "~> 1.0"},
-      {:esbuild, "~> 0.3", runtime: Mix.env() == :dev},
+      #{:humo, "~> 0.1.0"},
       {:humo, git: "git@github.com:humology/humo.git"},
-      {:humo_account, git: "git@github.com:humology/humo_account.git"}
+      #{:humo_account, "~> 0.1.0"}
+      {:humo_account, git: "git@github.com:humology/humo_account.git"},
     ]
   end
 
