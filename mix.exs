@@ -62,9 +62,9 @@ defmodule HumoRbac.MixProject do
       {:jason, "~> 1.2"},
       {:plug_cowboy, "~> 2.5"},
       #{:humo, "~> 0.1.0"},
-      {:humo, git: "git@github.com:humology/humo.git"},
+      {:humo, github: "humology/humo"},
       #{:humo_account, "~> 0.1.0"}
-      {:humo_account, git: "git@github.com:humology/humo_account.git"},
+      {:humo_account, github: "humology/humo_account"},
     ]
   end
 
