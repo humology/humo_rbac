@@ -36,6 +36,7 @@ defmodule HumoRbac.RolesServiceTest do
 
     test "with all access returns all roles" do
       role = role_fixture()
+
       fn ->
         assert role in RolesService.list_roles(nil)
       end

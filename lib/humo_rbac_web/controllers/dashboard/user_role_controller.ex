@@ -37,7 +37,10 @@ defmodule HumoRbacWeb.Dashboard.UserRoleController do
     render(
       conn,
       "index.html",
-      users: users, search: search, page: page, page_max: page_max
+      users: users,
+      search: search,
+      page: page,
+      page_max: page_max
     )
   end
 

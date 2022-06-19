@@ -24,12 +24,12 @@ defmodule HumoRbac.Authorizer.RBAC do
   end
 
   def can_actions(%RBACAuthorization{} = authorization, {:list, resource_module})
-  when is_atom(resource_module) do
+      when is_atom(resource_module) do
     can_actions(authorization, resource_module)
   end
 
   def can_actions(%RBACAuthorization{} = authorization, resource_module)
-  when is_atom(resource_module) do
+      when is_atom(resource_module) do
     if authorization.is_administrator do
       resource_actions(resource_module)
     else

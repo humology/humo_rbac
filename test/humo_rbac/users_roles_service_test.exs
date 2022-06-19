@@ -11,7 +11,14 @@ defmodule HumoRbac.UsersRolesServiceTest do
     setup do
       role = insert(:role)
       user = insert(:user, roles: [role], inserted_at: ~N[2022-03-15 00:00:00])
-      user2 = insert(:user, roles: [role], email: "user2@example.invalid", inserted_at: ~N[2022-03-16 00:00:00])
+
+      user2 =
+        insert(:user,
+          roles: [role],
+          email: "user2@example.invalid",
+          inserted_at: ~N[2022-03-16 00:00:00]
+        )
+
       user3 = insert(:user, email: "user3@example.invalid", inserted_at: ~N[2022-03-17 00:00:00])
 
       %{role: role, user: user, user2: user2, user3: user3}

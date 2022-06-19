@@ -18,11 +18,9 @@ config :humo, :plugins,
     ]
   }
 
-config :humo, HumoWeb.PluginsRouter,
-  humo_rbac: HumoRbacWeb.PluginRouter
+config :humo, HumoWeb.PluginsRouter, humo_rbac: HumoRbacWeb.PluginRouter
 
-config :humo, HumoWeb.BrowserPlugs,
-  humo_rbac: [{HumoRbacWeb.AuthorizePlug, true}]
+config :humo, HumoWeb.BrowserPlugs, humo_rbac: [{HumoRbacWeb.AuthorizePlug, true}]
 
 config :humo, Humo.Warehouse,
   humo_rbac: [

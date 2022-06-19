@@ -83,6 +83,7 @@ defmodule HumoRbacWeb.Dashboard.RoleController do
     role =
       Map.fetch!(conn.params, "id")
       |> RolesService.get_role!()
+
     assign(conn, :role, role)
   end
 end

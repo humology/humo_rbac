@@ -17,7 +17,8 @@ defmodule HumoRbac.MixProject do
         maintainers: ["Kamil Shersheyev"],
         licenses: ["Apache-2.0"],
         links: %{"GitHub" => @scm_url},
-        files: ~w(assets config/plugin.exs lib priv mix.exs package.json LICENSE README.md .formatter.exs)
+        files:
+          ~w(assets config/plugin.exs lib priv mix.exs package.json LICENSE README.md .formatter.exs)
       ],
       source_url: @scm_url,
       humo_plugin: true,
@@ -61,10 +62,10 @@ defmodule HumoRbac.MixProject do
       {:gettext, "~> 0.18"},
       {:jason, "~> 1.2"},
       {:plug_cowboy, "~> 2.5"},
-      #{:humo, "~> 0.1.0"},
+      # {:humo, "~> 0.1.0"},
       {:humo, github: "humology/humo"},
-      #{:humo_account, "~> 0.1.0"}
-      {:humo_account, github: "humology/humo_account"},
+      # {:humo_account, "~> 0.1.0"}
+      {:humo_account, github: "humology/humo_account"}
     ]
   end
 

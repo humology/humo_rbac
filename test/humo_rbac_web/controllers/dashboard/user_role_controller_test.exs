@@ -23,8 +23,8 @@ defmodule HumoRbacWeb.Dashboard.UserRoleControllerTest do
           assert response =~ "<h3>Users roles</h3>"
           assert response =~ user.first_name
           assert response =~ user.last_name
-          assert (response =~ "Show") == ("read" in resource_can_actions)
-          assert (response =~ "Edit") == ("update" in resource_can_actions)
+          assert response =~ "Show" == "read" in resource_can_actions
+          assert response =~ "Edit" == "update" in resource_can_actions
         end
         |> Mock.with_mock(
           can_all: fn _, "read", User -> User end,
@@ -74,15 +74,17 @@ defmodule HumoRbacWeb.Dashboard.UserRoleControllerTest do
           conn = get(conn, routes().dashboard_humo_rbac_user_role_path(conn, :show, user))
 
           response = html_response(conn, 200)
-          assert (response =~ "Edit") == ("update" in record_can_actions)
-          assert (response =~ "Back") == ("read" in list_module_can_actions)
+          assert response =~ "Edit" == "update" in record_can_actions
+          assert response =~ "Back" == "read" in list_module_can_actions
         end
-        |> Mock.with_mock(can_actions: fn
-          _, %User{} -> record_can_actions
-          _, {:list, User} -> list_module_can_actions
-          _, {:list, Role} -> ["read"]
-          _, _ -> []
-        end)
+        |> Mock.with_mock(
+          can_actions: fn
+            _, %User{} -> record_can_actions
+            _, {:list, User} -> list_module_can_actions
+            _, {:list, Role} -> ["read"]
+            _, _ -> []
+          end
+        )
       end
     end
 
@@ -104,7 +106,7 @@ defmodule HumoRbacWeb.Dashboard.UserRoleControllerTest do
 
           response = html_response(conn, 200)
           assert response =~ "<h3>Edit User roles</h3>"
-          assert (response =~ "Back") == ("read" in list_module_can_actions)
+          assert response =~ "Back" == "read" in list_module_can_actions
         end
         |> Mock.with_mock(
           can_all: fn _, "read", Role -> Role end,
@@ -130,21 +132,32 @@ defmodule HumoRbacWeb.Dashboard.UserRoleControllerTest do
   describe "update user roles" do
     test "redirects when data is valid", %{conn: conn, user: user, role: role} do
       fn ->
-        conn = put(conn, routes().dashboard_humo_rbac_user_role_path(conn, :update, user), user: %{roles: [role.id]})
-        assert redirected_to(conn) == routes().dashboard_humo_rbac_user_role_path(conn, :show, user)
+        conn =
+          put(conn, routes().dashboard_humo_rbac_user_role_path(conn, :update, user),
+            user: %{roles: [role.id]}
+          )
+
+        assert redirected_to(conn) ==
+                 routes().dashboard_humo_rbac_user_role_path(conn, :show, user)
 
         user = UsersRolesService.get_user!(user.id)
         assert [role] == user.roles
       end
-      |> Mock.with_mock(can_actions: fn
-        _, %User{} -> ["update"]
-        _, {:list, Role} -> ["read"]
-      end)
+      |> Mock.with_mock(
+        can_actions: fn
+          _, %User{} -> ["update"]
+          _, {:list, Role} -> ["read"]
+        end
+      )
     end
 
     test "no access", %{conn: conn, user: user, role: role} do
       fn ->
-        conn = put(conn, routes().dashboard_humo_rbac_user_role_path(conn, :update, user), user: %{roles: [role.id]})
+        conn =
+          put(conn, routes().dashboard_humo_rbac_user_role_path(conn, :update, user),
+            user: %{roles: [role.id]}
+          )
+
         assert response(conn, 403) =~ "Forbidden"
       end
       |> Mock.with_mock(can_actions: &NoAccess.can_actions/2)
