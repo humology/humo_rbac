@@ -1,6 +1,8 @@
 defmodule HumoRbacWeb.Dashboard.UserRoleView do
   use HumoRbacWeb, :view
 
+  import Ecto.Changeset
+
   def roles_options(items) do
     for item <- items do
       {item.name, to_string(item.id)}

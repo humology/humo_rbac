@@ -6,10 +6,14 @@ defmodule HumoRbac.UsersRolesService do
   import Ecto.Query, warn: false
   alias Humo.Repo
 
-  alias HumoRbac.UsersRolesService.User
+  alias HumoAccount.UsersService.User
+  alias HumoRbac.UsersRolesService.UserWithRoles
   alias HumoRbac.UsersRolesService.UserRole
   alias HumoRbac.RolesService.Role
   alias Humo.Authorizer
+  alias Ecto.Changeset
+
+  alias Ecto.Multi
 
   @doc """
   Returns list of users by page, size and optional search query.
@@ -59,8 +63,21 @@ defmodule HumoRbac.UsersRolesService do
 
   """
   def get_user!(id) do
-    Repo.get!(User, id)
-    |> Repo.preload(:roles)
+    user = Repo.get!(User, id)
+
+    from(r in Role,
+      join: ur in UserRole,
+      on: ur.role_id == r.id and ur.user_id == ^user.id,
+      select: %{role: r, user_role: ur}
+    )
+    |> Repo.all()
+    |> then(fn user_roles ->
+      %UserWithRoles{
+        user: user,
+        user_roles: Enum.map(user_roles, & &1.user_role),
+        roles: Enum.map(user_roles, & &1.role)
+      }
+    end)
   end
 
   @doc """
@@ -75,10 +92,51 @@ defmodule HumoRbac.UsersRolesService do
       {:error, %Ecto.Changeset{}}
 
   """
-  def update_user(%User{} = user, attrs) do
-    user
-    |> User.changeset(attrs)
-    |> Repo.update()
+  def update_user(%UserWithRoles{} = user, attrs) do
+    # changes: #Ecto.Changeset<
+    #   action: nil,
+    #   changes: %{
+    #     roles: [
+    #       #Ecto.Changeset<action: :update, changes: %{}, errors: [],
+    #        data: #HumoRbac.RolesService.Role<>, valid?: true>,
+    #       #Ecto.Changeset<action: :update, changes: %{}, errors: [],
+    #        data: #HumoRbac.RolesService.Role<>, valid?: true>
+    #     ]
+    #   },
+    #   errors: [],
+    #   data: #HumoRbac.UsersRolesService.UserWithRoles<>,
+    #   valid?: true
+    # >
+    changes =
+      UserWithRoles.changeset(user, attrs |> IO.inspect(label: "attrs"))
+      |> IO.inspect(label: "changes")
+
+    role_changes =
+      (Changeset.get_change(changes, :roles) ||
+         [])
+      |> IO.inspect(label: "role_changes")
+
+    Multi.new()
+    |> then(fn updates ->
+      Enum.reduce(role_changes, updates, fn role_change, updates ->
+        case Enum.find(user.roles, &(&1.id == get_field(role_change.id))) do
+          nil ->
+            Multi.insert(updates, :role, %UserRole{
+              user_id: user.user.id,
+              role_id: get_field(role_change.id)
+            })
+
+          _ ->
+            Multi.update(updates, :role, UserRole.changeset(role_change, %{}))
+        end
+      end)
+    end)
+    |> Repo.transaction()
+    |> IO.inspect()
+    |> case do
+      {:ok, _} -> {:ok, get_user!(user.user.id)}
+      {:error, error} -> {:error, error}
+    end
   end
 
   @doc """
@@ -90,8 +148,8 @@ defmodule HumoRbac.UsersRolesService do
       %Ecto.Changeset{source: %User{}}
 
   """
-  def change_user(%User{} = user) do
-    User.changeset(user, %{})
+  def change_user(%UserWithRoles{} = user) do
+    UserWithRoles.changeset(user, %{})
   end
 
   defp do_count_users(query) do

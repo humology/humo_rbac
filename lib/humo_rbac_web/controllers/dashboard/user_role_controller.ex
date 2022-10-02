@@ -60,14 +60,14 @@ defmodule HumoRbacWeb.Dashboard.UserRoleController do
   end
 
   def update(conn, params) do
-    user_params = Map.get(params, "user", %{})
+    user_params = Map.get(params, "user_with_roles", %{})
     user = conn.assigns.user
 
     case UsersRolesService.update_user(user, user_params) do
       {:ok, user} ->
         conn
         |> put_flash(:info, "User roles updated successfully.")
-        |> redirect(to: routes().dashboard_humo_rbac_user_role_path(conn, :show, user))
+        |> redirect(to: routes().dashboard_humo_rbac_user_role_path(conn, :show, user.user))
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "edit.html", user: user, changeset: changeset)

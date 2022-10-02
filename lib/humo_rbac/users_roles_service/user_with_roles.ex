@@ -1,25 +1,23 @@
-defmodule HumoRbac.UsersRolesService.User do
+defmodule HumoRbac.UsersRolesService.UserWithRoles do
   use Ecto.Schema
   import Ecto.Changeset
   alias HumoRbac.UsersRolesService.UserRole
   alias HumoRbac.RolesService.Role
+  alias HumoAccount.UsersService.User
   alias HumoRbac.RolesService
 
   @primary_key {:id, :binary_id, autogenerate: true}
   @derive {Inspect, only: [:id]}
 
-  schema "humo_account_users" do
-    field :first_name, :string
-    field :last_name, :string
-    field :email, :string
-    field :email_verified_at, :utc_datetime_usec, default: nil
+  embedded_schema do
+    belongs_to :user, User
+
+    has_many :user_roles, UserRole
 
     many_to_many :roles, Role,
       join_keys: [user_id: :id, role_id: :id],
       join_through: UserRole,
       on_replace: :delete
-
-    timestamps()
   end
 
   def changeset(user, attrs) do
