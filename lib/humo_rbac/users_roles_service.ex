@@ -103,24 +103,22 @@ defmodule HumoRbac.UsersRolesService do
   end
 
   defp match_search(query, search) do
-    case Ecto.UUID.cast(search) do
-      {:ok, _} ->
-        from u in query,
-          where: u.id == ^search
+    if is_uuid(search) do
+      from u in query,
+        where: u.id == ^search
+    else
+      search = "%#{search}%"
 
-      :error ->
-        search = "%#{search}%"
-
-        from u in query,
-          join: ur in UserRole,
-          on: ur.user_id == u.id,
-          join: r in Role,
-          on: r.id == ur.role_id,
-          where:
-            ilike(u.first_name, ^search) or
-              ilike(u.last_name, ^search) or
-              ilike(u.email, ^search) or
-              ilike(r.name, ^search)
+      from u in query,
+        join: ur in UserRole,
+        on: ur.user_id == u.id,
+        join: r in Role,
+        on: r.id == ur.role_id,
+        where:
+          ilike(u.first_name, ^search) or
+            ilike(u.last_name, ^search) or
+            ilike(u.email, ^search) or
+            ilike(r.name, ^search)
     end
   end
 
@@ -133,5 +131,9 @@ defmodule HumoRbac.UsersRolesService do
     from query,
       limit: ^size,
       offset: ^((page - 1) * size)
+  end
+
+  defp is_uuid(str) do
+    byte_size(str) == 36 and match?({:ok, _}, Ecto.UUID.cast(str))
   end
 end
